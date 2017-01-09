@@ -32,7 +32,17 @@ public class MyClass {
             }
             System.out.println("开始复制模板...");
             //生产模块目录
-            File moduleFile = new File(mvpTemplatesFile + "/" + reads[0]);
+            String[] modules = reads[0].split("(?<!^)(?=[A-Z])");
+            String moduleName = "";
+            for (int i = 0; i < modules.length; i++) {
+                modules[i]  = modules[i].toLowerCase();
+                if (i == modules.length - 1) {
+                    moduleName += modules[i];
+                } else {
+                    moduleName += modules[i] + "_";
+                }
+            }
+            File moduleFile = new File(mvpTemplatesFile + "/" + moduleName);
             if (!moduleFile.exists()) {
                 moduleFile.mkdirs();
                 //生成view
@@ -53,21 +63,21 @@ public class MyClass {
             }
             File demoActivityFile = new File(resourcesPath + "/demo/DemoActivity.java");
             copyFile(demoActivityFile,
-                    mvpTemplatesFile.getAbsolutePath() + "/" + reads[0] + "/" + reads[0] + "Activity.java",
+                    mvpTemplatesFile.getAbsolutePath() + "/" + moduleName + "/" + reads[0] + "Activity.java",
                     reads);
             File demoViewFile = new File(resourcesPath + "/demo/view/DemoView.java");
             copyFile(demoViewFile,
-                    mvpTemplatesFile.getAbsolutePath() + "/" + reads[0] + "/view/" + reads[0] + "View.java",
+                    mvpTemplatesFile.getAbsolutePath() + "/" + moduleName + "/view/" + reads[0] + "View.java",
                     reads);
             File demoPresenterFile = new File(resourcesPath + "/demo/presenter/DemoPresenter.java");
             copyFile(demoPresenterFile,
-                    mvpTemplatesFile.getAbsolutePath() + "/" + reads[0] + "/presenter/" + reads[0] + "Presenter.java",
+                    mvpTemplatesFile.getAbsolutePath() + "/" + moduleName + "/presenter/" + reads[0] + "Presenter.java",
                     reads);
             File demoPresenterImplFile = new File(resourcesPath + "/demo/presenter/DemoPresenterImpl.java");
             copyFile(demoPresenterImplFile,
-                    mvpTemplatesFile.getAbsolutePath() + "/" + reads[0] + "/presenter/" + reads[0] + "PresenterImpl.java",
+                    mvpTemplatesFile.getAbsolutePath() + "/" + moduleName + "/presenter/" + reads[0] + "PresenterImpl.java",
                     reads);
-            System.out.println("模板生成成功,保存在build/mvp-templates/" + reads[0]);
+            System.out.println("模板生成成功,保存在build/mvp-templates/" + moduleName);
         } catch (Exception e) {
             e.printStackTrace();
         }
