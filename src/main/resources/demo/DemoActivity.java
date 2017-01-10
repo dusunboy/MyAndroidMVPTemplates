@@ -7,7 +7,7 @@ public class $NameActivity extends BasePresenterActivity<$NamePresenterImpl> imp
 
     @Override
     public int getLayoutView(Bundle savedInstanceState) {
-        return "";
+        return R.layout.activity_;
     }
 
     @Override

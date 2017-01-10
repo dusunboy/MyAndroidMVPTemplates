@@ -5,6 +5,6 @@ package $Package;
  */
 public class $NameAdapter extends SimpleRecyclerViewAdapter<$NameBean> {
     public $NameAdapter(ArrayList<$NameBean> $NameBeans) {
-        super(R.layout."", $NameViewHolder.class, $NameBeans);
+        super(R.layout.item_, $NameViewHolder.class, $NameBeans);
     }
 }
