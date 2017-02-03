@@ -36,7 +36,7 @@ public class MyClass {
         if (mode == ADAPTER) {
             generateRecycleViewAdapter(in, buildPath, resourcesPath);
         }
-        
+
     }
 
     /**
