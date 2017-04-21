@@ -1,0 +1,100 @@
+<resources>
+
+    <!-- Base application theme. -->
+    <style name="BaseLocalTheme" parent="Theme.AppCompat.Light.NoActionBar">
+        <!--<item name="colorPrimary">@color/primary</item>-->
+        <!--<item name="colorPrimaryDark">@color/primary_dark</item>-->
+        <!--<item name="colorAccent">@color/accent_material_light</item>-->
+
+        <!--<style name="AppTheme.Base" parent="Theme.AppCompat">-->
+        <!-- Here we setting appcompat’s actionBarStyle -->
+        <item name="windowActionBar">false</item>
+        <item name="drawerArrowStyle">@style/DrawerArrowStyle</item>
+        <!--<item name="android:actionMenuTextAppearance">@style/MenuTextStyle</item>-->
+
+        <!-- ...and here we setting appcompat’s color theming attrs -->
+        <item name="colorPrimary">@color/colorPrimary</item>
+        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="android:textColorPrimary">@color/textColorPrimary</item>
+        <!--   theme UI controls like checkboxes and text fields -->
+        <item name="colorAccent">@color/colorPrimaryDark</item>
+        <item name="android:windowNoTitle">true</item>
+        <!--<item name="android:windowFullscreen">true</item>-->
+        <item name="android:windowBackground">@android:color/white</item>
+        <item name="android:screenOrientation">portrait</item>
+    </style>
+
+
+    <style name="AppLocalTheme" parent="BaseLocalTheme">
+        <item name="android:windowIsTranslucent">true</item>
+    </style>
+
+
+    <style name="MyToolbar">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:minHeight">@dimen/dp_50</item>
+        <item name="android:background">@drawable/toolbar_bg</item>
+        <item name="android:clipToPadding">false</item>
+    </style>
+
+
+    <style name="DrawerArrowStyle" parent="Widget.AppCompat.DrawerArrowToggle">
+        <item name="spinBars">false</item>
+        <item name="color">@android:color/white</item>
+    </style>
+
+    <style name="Style_Dialog_Button">
+        <item name="android:textSize">15.0dip</item>
+        <item name="android:textColor">@android:color/white</item>
+        <!--<item name="android:background">@drawable/btn_yellow</item>-->
+        <item name="android:background">@drawable/dialog_confirm</item>
+        <item name="android:layout_marginLeft">6.0dip</item>
+        <item name="android:layout_marginRight">6.0dip</item>
+        <item name="android:minHeight">30.0dip</item>
+    </style>
+
+    <style name="Style_Dialog_Cancel_Button">
+        <item name="android:textSize">15.0dip</item>
+        <item name="android:textColor">@android:color/white</item>
+        <item name="android:background">@drawable/dialog_cancel</item>
+        <item name="android:layout_marginLeft">6.0dip</item>
+        <item name="android:layout_marginRight">6.0dip</item>
+        <item name="android:minHeight">30.0dip</item>
+    </style>
+
+    <style name="CustomDialogText">
+        <item name="android:textColor">@android:color/black</item>
+        <item name="android:textSize">16sp</item>
+    </style>
+
+    <style name="CustomDialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowBackground">@android:color/transparent</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowIsFloating">true</item>
+    </style>
+
+    <style name="CustomProgressStyle">
+        <item name="android:minWidth">77dp</item>
+        <item name="android:maxWidth">77dp</item>
+        <item name="android:minHeight">143dp</item>
+        <item name="android:maxHeight">143dp</item>
+    </style>
+
+
+    <style name="recyclerView">
+        <item name="android:layout_width">match_parent</item>
+        <item name="android:layout_height">match_parent</item>
+        <item name="android:clipToPadding">false</item>
+    </style>
+
+    <style name="loading_dialog" parent="android:style/Theme.Dialog">
+        <item name="android:windowFrame">@null</item>
+        <item name="android:windowNoTitle">true</item>
+        <item name="android:windowBackground">@color/translucent</item>
+        <item name="android:windowIsFloating">true</item>
+        <item name="android:windowContentOverlay">@null</item>
+    </style>
+
+
+</resources>

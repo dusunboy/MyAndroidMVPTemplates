@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    xmlns:custom="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical"
+    android:paddingBottom="@dimen/dp_10"
+    android:paddingLeft="@dimen/dp_10"
+    android:paddingRight="@dimen/dp_10">
+
+    <TextView
+        android:id="@android:id/text1"
+        style="@style/CustomDialogText"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:visibility="gone" />
+
+    <TextView
+        android:id="@android:id/message"
+        android:textColor="@color/dialog_text_color"
+        android:textSize="@dimen/sp_14"
+        android:layout_width="wrap_content"
+        android:visibility="gone"
+        android:layout_height="wrap_content"/>
+
+    <!--<ProgressBar-->
+        <!--android:id="@android:id/progress"-->
+        <!--style="@android:style/Widget.ProgressBar.Horizontal"-->
+        <!--android:layout_width="fill_parent"-->
+        <!--android:layout_height="10dip"-->
+        <!--android:layout_marginTop="2dip"-->
+        <!--android:progressDrawable="@drawable/progress" />-->
+
+    <com.daimajia.numberprogressbar.NumberProgressBar
+        android:id="@android:id/progress"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/dp_40"
+
+        custom:progress_unreached_color="#ffffffff"
+
+        custom:progress_unreached_bar_height="@dimen/dp_8"
+        custom:progress_reached_bar_height="@dimen/dp_10"
+        custom:progress_text_size="@dimen/sp_14"
+        custom:progress_text_offset="@dimen/dp_2"
+        custom:progress_text_visibility="visible"
+        />
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_marginTop="@dimen/dp_10"
+        android:layout_height="wrap_content" >
+
+        <Button
+            android:id="@+id/btn"
+            style="@style/Style_Dialog_Cancel_Button"
+            android:layout_width="0dp"
+            android:layout_height="@dimen/dp_35"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginLeft="@dimen/dp_5"
+            android:layout_marginRight="@dimen/dp_5"
+            android:layout_weight="1"
+            android:maxLines="2" />
+    </LinearLayout>
+
+</LinearLayout>
