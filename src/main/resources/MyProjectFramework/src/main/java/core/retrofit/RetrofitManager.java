@@ -26,6 +26,8 @@ public class RetrofitManager {
 
     public static final int CONNECT_TIME_OUT = 30;
     public static final int READ_TIME_OUT = 20;
+    public static final int MAX_IDLE_CONNECTIONS = 150;
+    public static final int KEEP_ALIVE_DURATION_MS = 150;
     private Retrofit retrofit;
     private OkHttpClient client;
 
@@ -45,6 +47,7 @@ public class RetrofitManager {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
         httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
         client = new OkHttpClientBuilder()
+                .connectionPool(new ConnectionPool(MAX_IDLE_CONNECTIONS, KEEP_ALIVE_DURATION_MS, TimeUnit.SECONDS))
                 .addInterceptor(httpLoggingInterceptor)
                 .addInterceptor(tag == null ? new ResponseInterceptor()
                         : new ResponseInterceptor(tag))
@@ -157,6 +160,16 @@ public class RetrofitManager {
          */
         public OkHttpClientBuilder authenticator(Authenticator authenticator) {
             builder.authenticator(authenticator);
+            return this;
+        }
+
+        /**
+         * Sets the connection pool used to recycle HTTP and HTTPS connections.
+         *
+         * <p>If unset, a new connection pool will be used.
+         */
+        public OkHttpClientBuilder connectionPool(ConnectionPool connectionPool) {
+            builder.connectionPool(connectionPool);
             return this;
         }
 
