@@ -15,7 +15,7 @@ public class LogUtil {
     private static final String logMark;
     private static final String logMark2;
     private static boolean isDebug;
-    public static String NETWORK_DATA_SEPARATOR = "&:&";
+    public static final String NETWORK_DATA_SEPARATOR = "&:&";
 
     private static final int maxLength;
 

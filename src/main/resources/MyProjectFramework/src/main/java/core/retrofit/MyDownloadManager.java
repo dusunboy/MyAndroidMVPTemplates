@@ -208,10 +208,14 @@ public class MyDownloadManager {
      */
     private static void writeFile(BufferedSource source, File file) throws Exception {
         if (!file.getParentFile().exists()) {
-            file.getParentFile().mkdirs();
+            if (!file.getParentFile().mkdirs()) {
+                throw new IOException("Unable to create path");
+            }
         }
         if (file.exists()) {
-            file.delete();
+            if (!file.delete()) {
+                throw new IOException("Unable to delete file");
+            }
         }
         BufferedSink bufferedSink = Okio.buffer(Okio.sink(file));
         bufferedSink.writeAll(source);

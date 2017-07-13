@@ -64,10 +64,12 @@ public class FileUtil {
 	 * @param path
 	 *            目录路径
 	 */
-	public static void createDirFile(String path) {
+	public static void createDirFile(String path) throws IOException {
 		File dir = new File(path);
 		if (!dir.exists()) {
-			dir.mkdirs();
+			if (!dir.mkdirs()) {
+				throw new IOException("Unable to create path");
+			}
 		}
 	}
 
@@ -96,12 +98,14 @@ public class FileUtil {
 	 * @param folderPath
 	 *            文件夹的路径
 	 */
-	public static void delFolder(String folderPath) {
+	public static void delFolder(String folderPath) throws IOException {
 		delAllFile(folderPath);
 		String filePath = folderPath;
 		filePath = filePath.toString();
 		File myFilePath = new File(filePath);
-		myFilePath.delete();
+		if (!myFilePath.delete()) {
+			throw new IOException("Unable to delete file");
+		}
 		System.out.println("删除文件夹成功");
 	}
 
@@ -111,7 +115,7 @@ public class FileUtil {
 	 * @param path
 	 *            文件的路径
 	 */
-	public static void delAllFile(String path) {
+	public static void delAllFile(String path) throws IOException {
 		File file = new File(path);
 		if (!file.exists()) {
 			System.out.println("文件不存在");
@@ -130,7 +134,9 @@ public class FileUtil {
 				temp = new File(path + File.separator + tempList[i]);
 			}
 			if (temp.isFile()) {
-				temp.delete();
+				if (!temp.delete()) {
+					throw new IOException("Unable to delete file");
+				}
 				System.out.println("删除文件成功");
 			}
 			if (temp.isDirectory()) {
@@ -144,14 +150,16 @@ public class FileUtil {
 	 * 删除文件
 	 * @param path
 	 */
-	public static void delFile(String path) {
+	public static void delFile(String path) throws IOException {
 		File file = new File(path);
 		if (!file.exists()) {
 			System.out.println("文件不存在");
 			return;
 		}
 		if (file.isFile()) {
-			file.delete();
+			if (!file.delete()) {
+				throw new IOException("Unable to delete file");
+			}
 			System.out.println("删除文件成功");
 		} else {
 			System.out.println("路径不是文件");
@@ -205,7 +213,9 @@ public class FileUtil {
 		try {
 			File dir = new File(filePath);
 			if (!dir.exists() && dir.isDirectory()) {//判断文件目录是否存在
-				dir.mkdirs();
+				if (!dir.mkdirs()) {
+					throw new IOException("Unable to create path");
+				}
 			}
 			file = new File(filePath + File.separator + fileName);
 			fos = new FileOutputStream(file);
@@ -244,12 +254,12 @@ public class FileUtil {
 			InputStream inStream = new FileInputStream(oldPath); //读入原文件
 			FileOutputStream fs = new FileOutputStream(newPath);
 			byte[] buffer = new byte[1444];
-			int length;
 			while ( (byteRead = inStream.read(buffer)) != -1) {
 //				byteSum += byteRead; //字节数 文件大小
 				fs.write(buffer, 0, byteRead);
 			}
 			inStream.close();
+			fs.close();
 		}
 	}
 

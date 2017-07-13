@@ -53,8 +53,8 @@ public class RectOnCamera extends View {
         int heightPixels = outMetrics.heightPixels - ScreenUtil.getToolbarHeight(context);
         rectOnCameraWidth = SCALE_WIDTH * outMetrics.widthPixels;
         rectOnCameraHeight = SCALE_HEIGHT * heightPixels;
-        leftOffset = (int) (outMetrics.widthPixels / 2 - rectOnCameraWidth / 2);
-        topOffset = (int) (heightPixels / 2 - rectOnCameraHeight / 2);
+        leftOffset = (int) (outMetrics.widthPixels / (float) 2 - rectOnCameraWidth / (float) 2);
+        topOffset = (int) (heightPixels / (float) 2 - rectOnCameraHeight / (float) 2);
         int x2 = (int) (leftOffset + rectOnCameraWidth);
         int y2 = (int) (topOffset + rectOnCameraHeight);
         return new Rect(leftOffset, topOffset, x2, y2);

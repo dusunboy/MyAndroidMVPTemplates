@@ -12,5 +12,5 @@ public interface OnDismiss {
      * @param dialog
      * @param type
      */
-    void OnDismissCall(DialogInterface dialog, int type);
+    void onDismissCall(DialogInterface dialog, int type);
 }

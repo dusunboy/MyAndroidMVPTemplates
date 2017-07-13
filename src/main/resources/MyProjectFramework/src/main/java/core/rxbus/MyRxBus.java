@@ -46,6 +46,10 @@ public class MyRxBus {
     }
 
     public void close() {
+        staticClose();
+    }
+
+    private static void staticClose() {
         mInstance = null;
     }
 }

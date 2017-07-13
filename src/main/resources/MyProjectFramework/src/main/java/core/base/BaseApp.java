@@ -18,7 +18,11 @@ public class BaseApp extends Application {
     @Override
     public void onCreate() {
         super.onCreate();
-        context = this;
+        onStaticCreate(this);
+    }
+
+    private static void onStaticCreate(BaseApp baseApp) {
+        context = baseApp;
     }
 
     public static Context getAppContext() {

@@ -35,7 +35,7 @@ public class EncryptUtil {
     // 算法名称/加密模式/填充方式
     public static final String CIPHER_ALGORITHM_ECB = "DES/ECB/PKCS5Padding";
     public static final String CIPHER_ALGORITHM_CBC = "DES/CBC/PKCS5Padding";
-    public static final byte[] iv = {(byte) 0xEF, (byte) 0xCD, (byte) 0x56, (byte) 0x78, (byte) 0xAB, (byte) 0x90, (byte) 0x34, (byte) 0x12};
+    protected static final byte[] iv = {(byte) 0xEF, (byte) 0xCD, (byte) 0x56, (byte) 0x78, (byte) 0xAB, (byte) 0x90, (byte) 0x34, (byte) 0x12};
 
 
     /**

@@ -93,7 +93,7 @@ public class PhotoUtil {
 	/**
 	 * 删除图片缓存目录
 	 */
-	public static void deleteImageFile() {
+	public static void deleteImageFile() throws IOException {
 		File dir = new File((String) SPUtil.get(BaseConstant.IMAGE_PATH, ""));
 		if (dir.exists()) {
 			FileUtil.delFolder((String) SPUtil.get(BaseConstant.IMAGE_PATH, ""));
@@ -254,7 +254,7 @@ public class PhotoUtil {
 	 *            图片的bitmap对象
 	 * @return
 	 */
-	public static String savePhotoToSDCard(Bitmap bitmap) {
+	public static String savePhotoToSDCard(Bitmap bitmap) throws IOException {
 		if (!FileUtil.isSdcardExist()) {
 			return null;
 		}
@@ -274,8 +274,10 @@ public class PhotoUtil {
 			return null;
 		} finally {
 			try {
-				fileOutputStream.flush();
-				fileOutputStream.close();
+				if (fileOutputStream != null) {
+					fileOutputStream.flush();
+					fileOutputStream.close();
+				}
 			} catch (IOException e) {
 				return null;
 			}
@@ -515,7 +517,6 @@ public class PhotoUtil {
 	}
 
 	public static ArrayList<MediaBean> getMediaWithImageOfFolderList(Context context) {
-		String startTime = String.valueOf(System.currentTimeMillis());
 		ArrayList<MediaBean> mediaBeanList = new ArrayList<>();
 		ContentResolver contentResolver = context.getContentResolver();
 		List<String> projection = new ArrayList<>();

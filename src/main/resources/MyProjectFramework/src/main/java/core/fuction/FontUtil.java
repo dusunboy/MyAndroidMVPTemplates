@@ -22,7 +22,7 @@ import java.io.OutputStream;
  * Created by Vincent on $Time.
  */
 public class FontUtil {
-    public static Typeface sTypeface = null;
+    protected static Typeface sTypeface = null;
 
     /**
      * Load font from filePath
@@ -95,7 +95,9 @@ public class FontUtil {
 
             // When loading completed, delete temporary files
             typeface = Typeface.createFromFile(fontFilePath);
-            new File(fontFilePath).delete();
+            if (!new File(fontFilePath).delete()) {
+                throw new IOException("Unable to create path");
+            }
         } catch (Resources.NotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {

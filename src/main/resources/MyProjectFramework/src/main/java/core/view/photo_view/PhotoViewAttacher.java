@@ -612,8 +612,8 @@ public class PhotoViewAttacher implements IPhotoView, View.OnTouchListener,
 
         if (null != imageView) {
             setScale(scale,
-                    (imageView.getRight()) / 2,
-                    (imageView.getBottom()) / 2,
+                    (imageView.getRight()) / (float) 2,
+                    (imageView.getBottom()) / (float) 2,
                     animate);
         }
     }

@@ -21,6 +21,7 @@ import $Package.core.model.CallLogBean;
 
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 import java.io.InputStream;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
@@ -227,7 +228,9 @@ public class AppUtil {
         try {
             InputStream is = BaseApp.getAppContext().getAssets().open(fileName);
             File file = new File(path);
-            file.createNewFile();
+            if (!file.createNewFile()) {
+                throw new IOException("Unable to create file");
+            }
             FileOutputStream fos = new FileOutputStream(file);
             byte[] temp = new byte[1024];
             int i = 0;

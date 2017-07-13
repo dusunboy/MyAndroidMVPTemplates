@@ -59,8 +59,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
 	@Override
 	protected void onDestroy() {
-        System.gc();
-        Runtime.getRuntime().gc();
 		super.onDestroy();
     }
 

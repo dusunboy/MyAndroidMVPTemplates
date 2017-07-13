@@ -51,6 +51,10 @@ public class ShakeListener implements SensorEventListener {
     }
 
     public void close() {
+        staticClose();
+    }
+
+    private static void staticClose() {
         shakeListener = null;
     }
 

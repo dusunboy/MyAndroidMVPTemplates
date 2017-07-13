@@ -166,11 +166,12 @@ public class CameraView implements SurfaceHolder.Callback,
             setCameraPictureSize();
             setCameraPreviewSize();
             changeFlash(flash_type);
-            camera.startPreview();
             if (camera == null) {
                 if (onPermissionListener != null) {
                     onPermissionListener.granted(false);
                 }
+            } else {
+                camera.startPreview();
             }
         } catch (Exception e) {
             e.printStackTrace();
@@ -203,9 +204,11 @@ public class CameraView implements SurfaceHolder.Callback,
         Collections.sort(sizes, sizeComparator);
         for (Camera.Size size : sizes) {
             params.setPreviewSize(size.width, size.height);
-            if (size.width * 1.0 / size.height * 1.0 == 4.0 / 3.0 && currentMODE == MODE4T3) {
+//            if (size.width * 1.0 / size.height * 1.0 == 4.0 / 3.0 && currentMODE == MODE4T3) {
+            if (Math.abs(size.width * 1.0 / size.height * 1.0 - 4.0 / 3.0) < .0000001 && currentMODE == MODE4T3) {
                 break;
-            } else if (size.width * 1.0 / size.height * 1.0 == 16.0 / 9.0 && currentMODE == MODE16T9) {
+//            } else if (size.width * 1.0 / size.height * 1.0 == 16.0 / 9.0 && currentMODE == MODE16T9) {
+            } else if (Math.abs(size.width * 1.0 / size.height * 1.0 - 16.0 / 9.0) < .0000001 && currentMODE == MODE16T9) {
                 break;
             }
         }
@@ -218,10 +221,14 @@ public class CameraView implements SurfaceHolder.Callback,
         Collections.sort(sizes, sizeComparator);
         for (Camera.Size size : sizes) {
             params.setPictureSize(size.width, size.height);
-            if (size.width * 1.0 / size.height * 1.0 == 4.0 / 3.0
+//            if (size.width * 1.0 / size.height * 1.0 == 4.0 / 3.0
+//                    && currentMODE == MODE4T3 && size.height < 2000) {
+            if (Math.abs(size.width * 1.0 / size.height * 1.0 - 4.0 / 3.0) < .0000001
                     && currentMODE == MODE4T3 && size.height < 2000) {
                 break;
-            } else if (size.width * 1.0 / size.height * 1.0 == 16.0 / 9.0
+//            } else if (size.width * 1.0 / size.height * 1.0 == 16.0 / 9.0
+//                    && currentMODE == MODE16T9 && size.height < 2000) {
+            } else if (Math.abs(size.width * 1.0 / size.height * 1.0 - 16.0 / 9.0) < .0000001
                     && currentMODE == MODE16T9 && size.height < 2000) {
                 break;
             }

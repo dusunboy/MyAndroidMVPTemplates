@@ -109,7 +109,6 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
             camera.stopPreview();//停止预览
             camera.release();//释放相机资源
             camera = null;
-            holder = null;
         }
     }
 
@@ -121,22 +120,22 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
     }
 
     // 拍照瞬间调用
-    private Camera.ShutterCallback shutter = new Camera.ShutterCallback() {
-        @Override
-        public void onShutter() {
-//            Log.i(TAG,"shutter");
-        }
-    };
+//    private Camera.ShutterCallback shutter = new Camera.ShutterCallback() {
+//        @Override
+//        public void onShutter() {
+////            Log.i(TAG,"shutter");
+//        }
+//    };
 
     // 获得没有压缩过的图片数据
-    private Camera.PictureCallback raw = new Camera.PictureCallback() {
-
-        @Override
-        public void onPictureTaken(byte[] data, Camera Camera) {
-//            Log.i(TAG, "raw");
-
-        }
-    };
+//    private Camera.PictureCallback raw = new Camera.PictureCallback() {
+//
+//        @Override
+//        public void onPictureTaken(byte[] data, Camera Camera) {
+////            Log.i(TAG, "raw");
+//
+//        }
+//    };
 
     //创建jpeg图片回调数据对象
     private Camera.PictureCallback jpeg = new Camera.PictureCallback() {
@@ -153,7 +152,9 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
                     String filePath = "/sdcard/dyk" + System.currentTimeMillis() + ".jpg";//照片保存路径
                     File file = new File(filePath);
                     if (!file.exists()) {
-                        file.createNewFile();
+                        if (!file.createNewFile()) {
+                            throw new IOException("Unable to create file");
+                        }
                     }
                     bos = new BufferedOutputStream(new FileOutputStream(file));
                     bm.compress(Bitmap.CompressFormat.JPEG, 100, bos);//将图片压缩到流中
@@ -165,9 +166,13 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
                 e.printStackTrace();
             } finally {
                 try {
-                    bos.flush();//输出
-                    bos.close();//关闭
-                    bm.recycle();// 回收bitmap空间
+                    if (bos != null) {
+                        bos.flush();//输出
+                        bos.close();//关闭
+                    }
+                    if (bm != null) {
+                        bm.recycle();// 回收bitmap空间
+                    }
                     camera.stopPreview();// 关闭预览
                     camera.startPreview();// 开启预览
                 } catch (IOException e) {
@@ -301,8 +306,8 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         }
 //        Log.i(TAG, "picSize.width=" + picSize.width + "  picSize.height=" + picSize.height);
         // 根据选出的PictureSize重新设置SurfaceView大小
-        float w = picSize.width;
-        float h = picSize.height;
+//        float w = picSize.width;
+//        float h = picSize.height;
         parameters.setPictureSize(picSize.width, picSize.height);
 //        this.setLayoutParams(new FrameLayout.LayoutParams((int) (screenHeight * (h / w)), screenHeight));
 
@@ -349,7 +354,7 @@ public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Call
         if (null == result) {
             for (Camera.Size size : pictureSizeList) {
                 float curRatio = ((float) size.width) / size.height;
-                if (curRatio == 4f / 3) {// 默认w:h = 4:3
+                if (Math.abs(curRatio - 4f / 3) < .0000001) {// 默认w:h = 4:3
                     result = size;
                     break;
                 }

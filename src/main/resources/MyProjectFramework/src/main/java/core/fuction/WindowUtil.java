@@ -32,15 +32,15 @@ public class WindowUtil {
     private static final String AUTO_RESIZE_STRICT_TAG = "strict_mode";
     private static final String TAG = WindowUtil.class.getSimpleName();
     /** 状态栏高度 */
-    public static int STATUS_BAR_HEIGHT;
+    protected static int STATUS_BAR_HEIGHT;
     /** 缩放比例:水平 */
-    public static float SCALE_RATIO_HORIZONTAL;
+    protected static float SCALE_RATIO_HORIZONTAL;
     /** 缩放比例:垂直 */
-    public static float SCALE_RATIO_VERTICAL;
+    protected static float SCALE_RATIO_VERTICAL;
     /** 缩放比例 */
-    public static float SCALE_RATIO;
+    protected static float SCALE_RATIO;
     /** 屏幕旋转度 */
-    public static int WINDOW_ROTATION;
+    protected static int WINDOW_ROTATION;
 
     private static float SCREEN_DENSITY = 1.0F;
     static {
@@ -723,8 +723,7 @@ public class WindowUtil {
      * @return
      */
     public static int getWindowWidth() {
-        DisplayMetrics dm = new DisplayMetrics();
-        dm = BaseApp.getAppContext().getResources().getDisplayMetrics();
+        DisplayMetrics dm = BaseApp.getAppContext().getResources().getDisplayMetrics();
         if (dm == null)
             return 0;
         return dm.widthPixels;
@@ -736,8 +735,7 @@ public class WindowUtil {
      * @return
      */
     public static int getWindowHeight() {
-        DisplayMetrics dm = new DisplayMetrics();
-        dm = BaseApp.getAppContext().getResources().getDisplayMetrics();
+        DisplayMetrics dm = BaseApp.getAppContext().getResources().getDisplayMetrics();
         if (dm == null)
             return 0;
         return dm.heightPixels;
@@ -807,8 +805,7 @@ public class WindowUtil {
      * 计算屏幕密度
      */
     public static void computeScreenDensity() {
-        DisplayMetrics dm = new DisplayMetrics();
-        dm = BaseApp.getAppContext().getResources().getDisplayMetrics();
+        DisplayMetrics dm = BaseApp.getAppContext().getResources().getDisplayMetrics();
         if (dm == null)
             return;
         SCREEN_DENSITY = dm.density;

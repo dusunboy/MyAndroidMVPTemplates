@@ -60,8 +60,6 @@ public abstract class BasePresenterActivity extends RxAppCompatActivity {
     @Override
     protected void onDestroy() {
         AppUtil.clearTextLineCache();
-        System.gc();
-        Runtime.getRuntime().gc();
         super.onDestroy();
     }
 

@@ -331,8 +331,8 @@ public class CustomAlertDialog extends Dialog implements DialogInterface.OnKeyLi
         	}
         	mDialogTemplate = layout;
         	
-			boolean hasTitle = setupTitle();
-        	boolean hasMessage = setupMessage();
+			setupTitle();
+        	setupMessage();
         	boolean hasList = setupList();
         	boolean hasButton = setupButton();
         	boolean hasView = setupView();
@@ -553,9 +553,9 @@ public class CustomAlertDialog extends Dialog implements DialogInterface.OnKeyLi
         	return dialog;
         }
 
-		public boolean KeyDown(DialogInterface dialog, int keyCode, KeyEvent event, int type) {
+		public boolean keyDown(DialogInterface dialog, int keyCode, KeyEvent event, int type) {
 			if (onKeyDown != null) {
-				return onKeyDown.OnKeyDownCall(dialog, keyCode, event, type);
+				return onKeyDown.onKeyDownCall(dialog, keyCode, event, type);
 			}
 			return false;
 		}
@@ -603,14 +603,14 @@ public class CustomAlertDialog extends Dialog implements DialogInterface.OnKeyLi
 			 * @param keyCode
 			 * @param event
 			 */
-			boolean OnKeyDownCall(DialogInterface dialog, int keyCode, KeyEvent event, int type);
+			boolean onKeyDownCall(DialogInterface dialog, int keyCode, KeyEvent event, int type);
 		}
 
 	}
 
 	@Override
 	public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
-		return builder.KeyDown(dialog, keyCode, event, getType());
+		return builder.keyDown(dialog, keyCode, event, getType());
 	}
 
     public void setOnKeyDown(Builder builder) {

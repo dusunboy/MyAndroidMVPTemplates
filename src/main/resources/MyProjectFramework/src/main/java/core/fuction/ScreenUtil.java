@@ -14,8 +14,7 @@ import android.view.WindowManager;
 import $Package.R;
 
 /**
- * 屏幕相关的辅助类
- * Created by Vincent on $Time.
+ * 获得屏幕相关的辅助类
  */
 public class ScreenUtil {
     private ScreenUtil() {
@@ -43,7 +42,7 @@ public class ScreenUtil {
      * @param context
      * @return
      */
-    public static int getScreenHeight(Context context) {
+    public static int getScreenHeight(Context context) throws Exception {
 //        WindowManager wm = (WindowManager) context
 //                .getSystemService(Context.WINDOW_SERVICE);
 //        DisplayMetrics outMetrics = new DisplayMetrics();
@@ -60,21 +59,15 @@ public class ScreenUtil {
         // includes window decorations (statusbar bar/navigation bar)
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.ICE_CREAM_SANDWICH
                 && Build.VERSION.SDK_INT < Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            try {
-                heightPixels = (Integer) Display.class
-                        .getMethod("getRawHeight").invoke(defaultDisplay);
-            } catch (Exception e) {
-            }
+            heightPixels = (Integer) Display.class
+                    .getMethod("getRawHeight").invoke(defaultDisplay);
         }
         // includes window decorations (statusbar bar/navigation bar)
         else if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN_MR1) {
-            try {
-                android.graphics.Point realSize = new android.graphics.Point();
-                Display.class.getMethod("getRealSize",
-                        android.graphics.Point.class).invoke(defaultDisplay, realSize);
-                heightPixels = realSize.y;
-            } catch (Exception e) {
-            }
+            android.graphics.Point realSize = new android.graphics.Point();
+            Display.class.getMethod("getRealSize",
+                    android.graphics.Point.class).invoke(defaultDisplay, realSize);
+            heightPixels = realSize.y;
         }
         return heightPixels;
 //        return outMetrics.heightPixels;
@@ -114,7 +107,12 @@ public class ScreenUtil {
         view.buildDrawingCache();
         Bitmap bmp = view.getDrawingCache();
         int width = getScreenWidth(activity);
-        int height = getScreenHeight(activity);
+        int height = 0;
+        try {
+            height = getScreenHeight(activity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Bitmap bp = null;
         bp = Bitmap.createBitmap(bmp, 0, 0, width, height);
         view.destroyDrawingCache();
@@ -138,7 +136,12 @@ public class ScreenUtil {
         int statusBarHeight = frame.top;
 
         int width = getScreenWidth(activity);
-        int height = getScreenHeight(activity);
+        int height = 0;
+        try {
+            height = getScreenHeight(activity);
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
         Bitmap bp = null;
         bp = Bitmap.createBitmap(bmp, 0, statusBarHeight, width, height
                 - statusBarHeight);

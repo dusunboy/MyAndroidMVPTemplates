@@ -71,7 +71,6 @@ public class DateUtil {
      * @return
      */
     public static List<Date> selectTimePeriod(String startTime, String endTime) {
-        Calendar cal = Calendar.getInstance();
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
         Date dBegin = null;
         try {

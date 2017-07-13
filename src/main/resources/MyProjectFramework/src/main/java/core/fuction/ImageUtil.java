@@ -19,6 +19,7 @@ import $Package.core.config.BaseConstant;
 import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileOutputStream;
+import java.io.IOException;
 
 /**
  * 图像处理工具类
@@ -120,7 +121,7 @@ public class ImageUtil {
 		// 如果大于80kb则再次压缩
 //			while (baos.toByteArray().length / 1024 > 80 && options != 10) {
 		//压缩到
-		while (baos.toByteArray().length / 1024 > 2048.00) {
+		while (baos.toByteArray().length / (float) 1024 > (float) 2048) {
 			// 清空baos
 			baos.reset();
 			// 这里压缩options%，把压缩后的数据存放到baos中
@@ -173,17 +174,17 @@ public class ImageUtil {
 
 	public static Bitmap compressImage(Bitmap bitmap) {
 		//图片允许最大空间   单位：KB
-		double maxSize = 500.00;
+		float maxSize = 500;
 		//将bitmap放至数组中，意在bitmap的大小（与实际读取的原文件要大）
 		ByteArrayOutputStream baos = new ByteArrayOutputStream();
 		bitmap.compress(Bitmap.CompressFormat.JPEG, 100, baos);
 		byte[] b = baos.toByteArray();
 		//将字节换成KB
-		double mid = b.length / 1024;
+		float mid = b.length / (float) 1024;
 		//判断bitmap占用空间是否大于允许最大空间  如果大于则压缩 小于则不压缩
 		if (mid > maxSize) {
 			//获取bitmap大小 是允许最大大小的多少倍
-			double i = mid / maxSize;
+			float i = mid / maxSize;
 			//开始压缩  此处用到平方根 将宽带和高度压缩掉对应的平方根倍 （1.保持刻度和高度和原bitmap比率一致，压缩后也达到了最大大小占用空间的大小）
 			bitmap = zoomImage(bitmap, bitmap.getWidth() / Math.sqrt(i),
 					bitmap.getHeight() / Math.sqrt(i));
@@ -224,12 +225,14 @@ public class ImageUtil {
 	 *
 	 * @return
 	 */
-	public static File getAlbumDir() {
+	public static File getAlbumDir() throws IOException {
 //		String path = android.os.Environment.getExternalStorageDirectory() 
 //				+ Constant.DIRECTORY + "";
 		File dir = new File(SPUtil.getString(BaseConstant.EXTERNAL_STORAGE_DIRECTORY) + "/DCIM/Camera/");
 		if (!dir.exists()) {
-			dir.mkdirs();
+			if (!dir.mkdirs()) {
+				throw new IOException("Unable to create path");
+			}
 		}
 		return dir;
 	}
@@ -908,7 +911,7 @@ public class ImageUtil {
 		// 水平方向
 		if (horz > 0.0) {
 			horz = Math.abs(horz) + 1.0;
-			if (horz != vert) {
+			if (Math.abs(horz - vert) >= .0000001) {
 				std_dev = Math.sqrt(-(horz * horz) / (2 * Math.log(1.0 / 255.0)));
 				findConstants(n_p, n_m, d_p, d_m, bd_p, bd_m, std_dev);
 			}
@@ -970,7 +973,7 @@ public class ImageUtil {
 	 */
 	private static void findConstants(double[] n_p, double[] n_m, double[] d_p, double[] d_m, double[] bd_p,
 									  double[] bd_m, double std_dev) {
-		double div = Math.sqrt(2 * 3.141593) * std_dev;
+		double div = Math.sqrt(2 * Math.PI) * std_dev;
 		double x0 = -1.783 / std_dev;
 		double x1 = -1.723 / std_dev;
 		double x2 = 0.6318 / std_dev;

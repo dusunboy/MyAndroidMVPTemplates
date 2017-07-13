@@ -221,7 +221,7 @@ public class UpdateManager implements OnDismiss {
     }
 
     @Override
-    public void OnDismissCall(DialogInterface dialog, int type) {
+    public void onDismissCall(DialogInterface dialog, int type) {
         dialog.dismiss();
         if (!isConfirmDialog) {
             if (isUpdate) {

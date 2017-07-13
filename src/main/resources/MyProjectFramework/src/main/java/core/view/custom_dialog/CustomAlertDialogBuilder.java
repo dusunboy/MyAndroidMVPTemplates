@@ -10,7 +10,6 @@ import android.view.View;
  */
 public class CustomAlertDialogBuilder implements OnDismiss {
     private final CustomAlertDialog.Builder builder;
-    private int theme;
     private OnDismiss onDismiss;
 
     public CustomAlertDialogBuilder(Context context) {
@@ -132,9 +131,9 @@ public class CustomAlertDialogBuilder implements OnDismiss {
      * @param type
      */
     @Override
-    public void OnDismissCall(DialogInterface dialog, int type) {
+    public void onDismissCall(DialogInterface dialog, int type) {
         if (onDismiss != null) {
-            onDismiss.OnDismissCall(dialog, type);
+            onDismiss.onDismissCall(dialog, type);
         }
     }
 

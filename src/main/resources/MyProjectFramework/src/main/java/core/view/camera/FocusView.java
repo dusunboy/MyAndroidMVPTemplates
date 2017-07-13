@@ -31,7 +31,9 @@ public class FocusView extends SurfaceView implements SurfaceHolder.Callback {
 
     public void setRectWidth(int rectDpiWidth) {
         float scale = context.getResources().getDisplayMetrics().density;
-        rectWidth = (int) (rectDpiWidth * scale + 0.5f);
+        synchronized (this) {
+            rectWidth = (int) (rectDpiWidth * scale + 0.5f);
+        }
     }
 
     public FocusView(Context context) {
@@ -51,11 +53,15 @@ public class FocusView extends SurfaceView implements SurfaceHolder.Callback {
     }
 
     public void setBitmap(Bitmap bitmap) {
-        this.bitmap = bitmap;
+        synchronized (this) {
+            this.bitmap = bitmap;
+        }
     }
 
     public void setBitmap(int res) {
-        bitmap = BitmapFactory.decodeResource(context.getResources(), res);
+        synchronized (this) {
+            bitmap = BitmapFactory.decodeResource(context.getResources(), res);
+        }
     }
 
     public void surfaceChanged(SurfaceHolder arg0, int arg1, int w, int h) {
@@ -87,7 +93,7 @@ public class FocusView extends SurfaceView implements SurfaceHolder.Callback {
         canvas.drawPaint(paint);
         if (bitmap != null) {
             paint.setXfermode(new PorterDuffXfermode(PorterDuff.Mode.SRC));
-            canvas.drawBitmap(bitmap, x - bitmap.getWidth() / 2, y - bitmap.getHeight() / 2, paint);
+            canvas.drawBitmap(bitmap, x - bitmap.getWidth() / (float) 2, y - bitmap.getHeight() / (float) 2, paint);
         } else {
             Paint paints = new Paint();
             paints.setStrokeWidth(3f);
