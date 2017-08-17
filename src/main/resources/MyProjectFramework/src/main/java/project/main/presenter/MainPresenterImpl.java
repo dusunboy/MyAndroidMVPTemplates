@@ -6,6 +6,7 @@ import $Package.core.mvp.BasePresenterActivityImpl;
 import $Package.core.mvp.BaseView;
 import $Package.core.retrofit.RetrofitManager;
 import $Package.project.main.view.MainView;
+import $Package.project.retrofit_config.ApiService;
 
 import javax.inject.Inject;
 
@@ -14,11 +15,13 @@ import javax.inject.Inject;
  */
 public class MainPresenterImpl extends BasePresenterActivityImpl implements MainPresenter {
 
+    private ApiService apiService;
     private MainView baseView;
 
     @Inject
     public MainPresenterImpl(RxAppCompatActivity activity, RetrofitManager retrofitManager) {
         super(activity, retrofitManager);
+        apiService = retrofit.create(ApiService.class);
     }
 
 
