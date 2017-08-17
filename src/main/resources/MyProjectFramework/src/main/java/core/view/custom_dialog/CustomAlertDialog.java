@@ -584,7 +584,7 @@ public class CustomAlertDialog extends Dialog implements DialogInterface.OnKeyLi
         @Override
         public void onDismiss(DialogInterface dialog) {
             if (onDismiss != null) {
-                onDismiss.OnDismissCall(dialog, type);
+                onDismiss.onDismissCall(dialog, type);
             }
         }
 
