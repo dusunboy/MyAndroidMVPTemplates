@@ -98,6 +98,11 @@
 -dontwarn okio.**
 ##---------------Okio---------------##
 
+##---------------Bugly---------------##
+-dontwarn com.tencent.bugly.**
+-keep public class com.tencent.bugly.**{*;}
+##---------------Bugly---------------##
+
 #### -- Support Library --
 # support-v4
 -dontwarn android.support.v4.**
