@@ -78,7 +78,7 @@ public class LocalCacheUtil {
                 for (File item : listFiles) {
                     if (item != null) {
                         if (!item.delete()) {
-                            throw new IOException("Unable to create path");
+//                            throw new IOException("Unable to create path");
                         }
                     }
                 }
