@@ -476,10 +476,14 @@ public class RxAsyncHttpReq {
                         }
                     };
                     fileAsyncHttpResponseHandler.setTag(tag);
-                    AsyncHttpReq.postFile(BaseApp.getAppContext(), url,
-                            (myRequestParams.getJsonParams() == null || myRequestParams.getJsonParams().equals(""))
-                                    ? myRequestParams : new StringEntity(myRequestParams.getJsonParams(), encoding),
-                            contentType, fileAsyncHttpResponseHandler);
+                    if (myRequestParams.getDownLoadMethod().equals(MyRequestParams.GET)) {
+                        AsyncHttpReq.getFile(BaseApp.getAppContext(), url, myRequestParams, fileAsyncHttpResponseHandler);
+                    } else {
+                        AsyncHttpReq.postFile(BaseApp.getAppContext(), url,
+                                (myRequestParams.getJsonParams() == null || myRequestParams.getJsonParams().equals(""))
+                                        ? myRequestParams : new StringEntity(myRequestParams.getJsonParams(), encoding),
+                                contentType, fileAsyncHttpResponseHandler);
+                    }
                     break;
 
                 case Method.UPLOAD:

@@ -8,8 +8,10 @@ import com.loopj.android.http.RequestParams;
  */
 public class MyRequestParams extends RequestParams  {
 
+    public static final String GET = "get";
     private String json;
     private String downloadSavePath;
+    private String downLoadMethod;
 
     /**
      * 参数与实体json传递
@@ -58,4 +60,19 @@ public class MyRequestParams extends RequestParams  {
         AsyncHttpReq.removeHeader(key);
     }
 
+    /**
+     * 获取下载请求方式
+     * @return
+     */
+    public String getDownLoadMethod() {
+        return downLoadMethod;
+    }
+
+    /**
+     * 设置下载请求方式
+     * @param downLoadMethod
+     */
+    public void setDownLoadMethod(String downLoadMethod) {
+        this.downLoadMethod = downLoadMethod;
+    }
 }

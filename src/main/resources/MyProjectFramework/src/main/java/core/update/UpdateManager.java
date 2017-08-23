@@ -10,6 +10,10 @@ import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import $Package.R;
 import $Package.core.activities.ActivitiesManager;
+import $Package.core.async_http.AsyncHttpReq;
+import $Package.core.async_http.AsyncHttpResponse;
+import $Package.core.async_http.MyRequestParams;
+import $Package.core.async_http.RxAsyncHttpReq;
 import $Package.core.config.BaseConstant;
 import $Package.core.fuction.DensityUtil;
 import $Package.core.fuction.SPUtil;
@@ -19,14 +23,12 @@ import $Package.core.view.CustomToast;
 import $Package.core.view.custom_dialog.CustomAlertDialog;
 import $Package.core.view.custom_dialog.CustomProgressDialog;
 import $Package.core.view.custom_dialog.OnDismiss;
-import $Package.core.async_http.AsyncHttpReq;
-import $Package.core.async_http.AsyncHttpResponse;
-import $Package.core.async_http.MyRequestParams;
-import $Package.core.async_http.RxAsyncHttpReq;
 
 import java.io.File;
 import java.util.ArrayList;
+import java.util.concurrent.TimeUnit;
 
+import io.reactivex.Observable;
 import io.reactivex.android.schedulers.AndroidSchedulers;
 import io.reactivex.annotations.NonNull;
 import io.reactivex.functions.Consumer;
@@ -230,7 +232,16 @@ public class UpdateManager implements OnDismiss {
             }
             if (isForceClose) {
                 CustomToast.getInstance().show(activity.getString(R.string.please_update_version));
-                popAllActivity();
+                Observable.just("")
+                        .compose(activity.bindToLifecycle())
+                        .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
+                        .delay(1000, TimeUnit.MILLISECONDS)
+                        .subscribe(new Consumer<String>() {
+                            @Override
+                            public void accept(@NonNull String s) throws Exception {
+                                popAllActivity();
+                            }
+                        });
             }
         } else {
             isConfirmDialog = false;
