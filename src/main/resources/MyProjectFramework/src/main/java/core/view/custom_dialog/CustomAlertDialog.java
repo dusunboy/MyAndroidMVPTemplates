@@ -9,6 +9,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
 import android.text.TextUtils;
+import android.text.method.ScrollingMovementMethod;
 import android.view.Gravity;
 import android.view.KeyEvent;
 import android.view.LayoutInflater;
@@ -523,6 +524,7 @@ public class CustomAlertDialog extends Dialog implements DialogInterface.OnKeyLi
         	if (!TextUtils.isEmpty(mMessage)){
         		TextView txtMessage = (TextView) mDialogTemplate.findViewById(R.id.message);
 				txtMessage.setTextSize(messageTextSize);
+				txtMessage.setMovementMethod(ScrollingMovementMethod.getInstance());
         		txtMessage.setText(mMessage);
         		return true;
         	}else{

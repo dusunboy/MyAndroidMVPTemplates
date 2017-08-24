@@ -69,7 +69,7 @@ public class UpdateManager implements OnDismiss {
         builder.setTitle(R.string.soft_update_title);
         builder.setOnDismissListener(this);
         if (!changeLog.equals("")) {
-            builder.setMessageTextSize(DensityUtil.dp2px(10));
+            builder.setMessageTextSize(DensityUtil.dp2px(8));
             builder.setMessage(activity.getString(R.string.changeLog) + "\n" + changeLog);
         } else {
             builder.setMessageTextSize(DensityUtil.dp2px(13));
@@ -118,7 +118,7 @@ public class UpdateManager implements OnDismiss {
         customProgressDialog.setMax(100);
         customProgressDialog.show();
         MyRequestParams myRequestParams = new MyRequestParams();
-        myRequestParams.setDownloadSavePath(directory + "/apk/"
+        myRequestParams.setDownloadSavePath(SPUtil.getString(BaseConstant.APK_PATH) + "/"
                 + activity.getString(R.string.app_name) + ".apk");
         ArrayList<FlowableProcessor<AsyncHttpResponse>> observables = new RxAsyncHttpReq().download(activity, url, myRequestParams);
         observables.get(1).compose(activity.bindUntilEvent(ActivityEvent.DESTROY)).subscribeOn(Schedulers.newThread())
@@ -189,10 +189,21 @@ public class UpdateManager implements OnDismiss {
         }
         CustomToast.getInstance().show(activity.getString(R.string.soft_update_complete));
 
-        Intent i = new Intent(Intent.ACTION_VIEW);
-        i.setDataAndType(Uri.parse("file://" + apkFile.toString()),
-                "application/vnd.android.package-archive");
-        activity.startActivity(i);
+        Intent intent = new Intent();
+        intent.setAction(Intent.ACTION_VIEW);
+        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+        if(Build.VERSION.SDK_INT >= 24) {
+            //判读版本是否在7.0以上
+            //参数1 上下文, 参数2 Provider主机地址 和配置文件中保持一致
+            // 参数3  共享的文件
+            Uri apkUri = FileProvider.getUriForFile(activity, BuildConfig.file_provider_authorities, apkFile);
+            //添加这一句表示对目标应用临时授权该Uri所代表的文件
+            intent.addFlags(Intent.FLAG_GRANT_READ_URI_PERMISSION);
+            intent.setDataAndType(apkUri, "application/vnd.android.package-archive");
+        }else{
+            intent.setDataAndType(Uri.fromFile(apkFile), "application/vnd.android.package-archive");
+        }
+        activity.startActivity(intent);
     }
 
 

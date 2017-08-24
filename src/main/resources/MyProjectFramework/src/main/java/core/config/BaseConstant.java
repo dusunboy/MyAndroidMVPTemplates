@@ -120,4 +120,5 @@ public class BaseConstant {
 
     public static final String VERSION = "version";
     public static final String POSITION = "positon";
+    public static final String APK_PATH = "apk_path";
 }

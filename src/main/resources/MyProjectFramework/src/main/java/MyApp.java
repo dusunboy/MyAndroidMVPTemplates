@@ -101,17 +101,21 @@ public class MyApp extends BaseApp {
          * SD卡文件名
          */
         SPUtil.put(BaseConstant.DIRECTORY, SPUtil.getString(BaseConstant.EXTERNAL_STORAGE_DIRECTORY) + "/" + Constant.APP_NAME);
-        /**
-         * IMEI
-         */
-        SPUtil.put(BaseConstant.IMEI, AppUtil.getIMEI());
-        /**
-         * 手机号
-         */
-        SPUtil.put(BaseConstant.PHONE, AppUtil.getPhone());
+//        /**
+//         * IMEI
+//         */
+//        SPUtil.put(BaseConstant.IMEI, AppUtil.getIMEI());
+//        /**
+//         * 手机号
+//         */
+//        SPUtil.put(BaseConstant.PHONE, AppUtil.getPhone());
         /**
          * 图片路径
          */
         SPUtil.put(BaseConstant.IMAGE_PATH, SPUtil.get(BaseConstant.DIRECTORY, Constant.APP_NAME) + "/Images");
+        /**
+         * apk路径
+         */
+        SPUtil.put(BaseConstant.APK_PATH, SPUtil.get(BaseConstant.DIRECTORY, Constant.APP_NAME) + "/Apk");
     }
 }
