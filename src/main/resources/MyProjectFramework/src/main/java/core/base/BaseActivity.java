@@ -1,13 +1,11 @@
 package $Package.core.base;
 
-import android.os.Build;
 import android.os.Bundle;
-import android.view.ViewGroup;
-import android.view.Window;
-import android.view.WindowManager;
 
+
+import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
-import $Package.core.system_bar_tint.SystemBarTintManager;
+import $Package.core.fuction.AppUtil;
 
 /**
  * 基类 <br/>
@@ -23,13 +21,33 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 		super.onCreate(savedInstanceState);
         this.savedInstanceState = savedInstanceState;
         setContentView(getLayoutView(savedInstanceState));
-//        setStateBarColor(ColorUtil.Hex2Color(SPUtil.getString(BaseConstant.COLOR_PRIMARY_DARK)));
 
+        initSystemBarTintManager();
         initToolbar();
         initView();
         init();
         clickEvent();
     }
+
+    /**
+     * 初始化SystemBarTintManager
+     */
+    private void initSystemBarTintManager() {
+        // create our manager instance after the content view is set
+        SystemBarTintManager tintManager = new SystemBarTintManager(this);
+        // enable status bar tint
+        tintManager.setStatusBarTintEnabled(true);
+        // enable navigation bar tint
+        tintManager.setNavigationBarTintEnabled(true);
+        // set a custom tint color for all system bars
+        tintManager.setStatusBarTintResource(R.color.colorPrimaryDark);
+//        tintManager.setTintColor(getResources().getColor(android.R.color.black));
+//        // set a custom navigation bar resource
+//        tintManager.setNavigationBarTintResource(R.drawable.my_tint);
+//        // set a custom status bar drawable
+//        tintManager.setStatusBarTintDrawable(MyDrawable);
+    }
+
 
     /**
 	 * 加载视图
@@ -59,6 +77,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 
 	@Override
 	protected void onDestroy() {
+        AppUtil.clearTextLineCache();
 		super.onDestroy();
     }
 
@@ -80,27 +99,6 @@ public abstract class BaseActivity extends RxAppCompatActivity {
     @Override
     protected void onStop() {
         super.onStop();
-    }
-
-    /**
-     * 设置状态栏颜色
-     * @param color
-     */
-    protected void setStateBarColor(int color) {
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.KITKAT) {
-            Window win = getWindow();
-            WindowManager.LayoutParams winParams = win.getAttributes();
-            final int bits = WindowManager.LayoutParams.FLAG_TRANSLUCENT_STATUS;
-            winParams.flags |= bits;
-            win.setAttributes(winParams);
-            SystemBarTintManager tintManager = new SystemBarTintManager(this);
-            tintManager.setStatusBarTintEnabled(true);
-            tintManager.setStatusBarTintColor(color);
-            tintManager.setStatusBarDarkMode(true, this);
-            SystemBarTintManager.SystemBarConfig config = tintManager.getConfig();
-            ((ViewGroup)findViewById(android.R.id.content)).getChildAt(0).
-            setPadding(0, config.getPixelInsetTop(true), 0, config.getPixelInsetBottom());
-        }
     }
 
 }

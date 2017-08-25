@@ -69,10 +69,9 @@ public class UpdateManager implements OnDismiss {
         builder.setTitle(R.string.soft_update_title);
         builder.setOnDismissListener(this);
         if (!changeLog.equals("")) {
-            builder.setMessageTextSize(DensityUtil.dp2px(8));
+            builder.setMessageTextSize(16);
             builder.setMessage(activity.getString(R.string.changeLog) + "\n" + changeLog);
         } else {
-            builder.setMessageTextSize(DensityUtil.dp2px(13));
             builder.setMessage(activity.getString(R.string.soft_update_info));
         }
         builder.setPositiveButton(R.string.update,
@@ -103,6 +102,10 @@ public class UpdateManager implements OnDismiss {
      * 显示下载提示框
      */
     private void showDownloadedDialog() {
+        if (url == null || url.equals("")) {
+            CustomToast.getInstance().show(activity.getString(R.string.download_link_invalid));
+            return;
+        }
         isShow = true;
         isUpdate = true;
         customProgressDialog = new CustomProgressDialog(activity, activity.getString(R.string.update));

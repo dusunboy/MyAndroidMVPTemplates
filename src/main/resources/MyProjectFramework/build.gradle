@@ -20,6 +20,14 @@ apply plugin: 'com.neenbedankt.android-apt'
 
 
 android {
+    signingConfigs {
+        config {
+            keyAlias 'demokey'
+            keyPassword 'demokey'
+            storeFile file('apk/demokey.jks')
+            storePassword 'demokey'
+        }
+    }
     compileSdkVersion COMPILE_SDK_VERSION as int
     buildToolsVersion BUILD_TOOLS_VERSION as String
 
@@ -45,10 +53,12 @@ android {
             shrinkResources true
             minifyEnabled true
             zipAlignEnabled true
+            signingConfig signingConfigs.config
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
         debug {
             minifyEnabled false
+            signingConfig signingConfigs.config
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
@@ -61,6 +71,22 @@ android {
         demo {
             minSdkVersion 15
             targetSdkVersion TARGET_SDK_VERSION as int
+            buildConfigField "String","file_provider_authorities","\"$Package.demo.fileprovider\""
+            manifestPlaceholders = [
+                    FILE_PROVIDER_AUTHORITIES:"$Package.demo.fileprovider",
+            ]
+            applicationId "$Package.demo"
+            versionCode 1
+            versionName "1.0.0"
+        }
+
+        official {
+            minSdkVersion 15
+            targetSdkVersion TARGET_SDK_VERSION as int
+            buildConfigField "String","file_provider_authorities","\"$Package.fileprovider\""
+            manifestPlaceholders = [
+                    FILE_PROVIDER_AUTHORITIES:"$Package.fileprovider",
+            ]
             applicationId "$Package"
             versionCode 1
             versionName "1.0.0"
@@ -125,6 +151,7 @@ dependencies {
     debugCompile "com.squareup.leakcanary:leakcanary-android:" + LEAKCANARY_VERSION
     releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:" + LEAKCANARY_VERSION
     testCompile "com.squareup.leakcanary:leakcanary-android-no-op:" + LEAKCANARY_VERSION
-
+    compile "com.android.support:multidex:" + MULTIDEX_VERSION
+    compile 'com.readystatesoftware.systembartint:systembartint:' + SYSTEMBARTINT_VERSION
 
 }
