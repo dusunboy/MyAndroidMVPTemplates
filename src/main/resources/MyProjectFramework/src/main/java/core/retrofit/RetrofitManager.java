@@ -26,8 +26,8 @@ public class RetrofitManager {
 
     public static final int CONNECT_TIME_OUT = 30;
     public static final int READ_TIME_OUT = 20;
-    public static final int MAX_IDLE_CONNECTIONS = 150;
-    public static final int KEEP_ALIVE_DURATION_MS = 150;
+    public static final int MAX_IDLE_CONNECTIONS = 50;
+    public static final int KEEP_ALIVE_DURATION_MS = 50;
     private Retrofit retrofit;
     private OkHttpClient client;
 
