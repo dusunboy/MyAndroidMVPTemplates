@@ -48,9 +48,9 @@ public class MyDatePickerDialog extends DatePickerDialog {
         final int titleDividerId = res.getIdentifier("titleDivider", "id", "android");
         final View titleDivider = findViewById(titleDividerId);
         if (titleDivider != null) {
-            titleDivider.setBackgroundColor(res.getColor(R.color.colorPrimary));
+            titleDivider.setBackgroundColor(res.getColor(R.color.colorAccent));
         }
-        NumberPickerStylingUtils.applyStyling(getDatePicker(), R.color.colorPrimary);
+        NumberPickerStylingUtils.applyStyling(getDatePicker(), R.color.colorAccent);
     }
 
     @Override
