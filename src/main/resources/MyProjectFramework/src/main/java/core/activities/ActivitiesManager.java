@@ -1,7 +1,6 @@
 package $Package.core.activities;
 
 import android.app.Activity;
-import android.support.v4.app.FragmentActivity;
 
 import java.util.Stack;
 
@@ -28,7 +27,7 @@ public class ActivitiesManager {
 		return instance;
 	}
 
-	
+
 	/**
 	 * 移出最后一个Activity
 	 * @param isFinish 是否结束Activity
@@ -39,29 +38,29 @@ public class ActivitiesManager {
 			if (isFinish) {
 				if (activity instanceof Activity) {
 					((Activity) activity).finish();
-				} else if (activity instanceof FragmentActivity) {
-					((FragmentActivity) activity).finish();
 				}
 			}
 			activityStack.remove(activity);
 			activity = null;
-		}	
+		}
 	}
 
-    /**
-     * 移出所有的Activity
-     */
-    public void popAllActivity() {
-        for (Object activity : activityStack) {
-            if (activity instanceof Activity) {
-                ((Activity) activity).finish();
-            } else if (activity instanceof FragmentActivity) {
-                ((FragmentActivity) activity).finish();
-            }
-            activityStack.remove(activity);
-            activity = null;
-        }
-    }
+	/**
+	 * 移出所有的Activity
+	 */
+	public void popAllActivity() {
+		Stack<Object> activityTemp = new Stack<Object>();
+		for (Object activity : activityStack) {
+			if (activity != null) {
+				if (activity instanceof Activity) {
+					activityTemp.add(activity);
+					((Activity) activity).finish();
+				}
+				activity = null;
+			}
+		}
+		activityStack.removeAll(activityTemp);
+	}
 
 	/**
 	 * 移出指定的Activity
@@ -73,10 +72,8 @@ public class ActivitiesManager {
 			if (isFinish) {
 				if (activity instanceof Activity) {
 					((Activity) activity).finish();
-				} else if (activity instanceof FragmentActivity) {
-					((FragmentActivity) activity).finish();
 				}
-			}			
+			}
 			activityStack.remove(activity);
 			activity = null;
 		}
@@ -84,14 +81,14 @@ public class ActivitiesManager {
 
 	/**
 	 * 取得最后一个Activity
-	 * @return 
+	 * @return
 	 */
 	public Object getLastActivity() {
-        if (activityStack.size() > 0) {
-            return activityStack.lastElement();
-        } else {
-            return null;
-        }
+		if (activityStack.size() > 0) {
+			return activityStack.lastElement();
+		} else {
+			return null;
+		}
 	}
 
 	/**
@@ -106,10 +103,6 @@ public class ActivitiesManager {
 			}
 			if (activity instanceof Activity) {
 				if (((Activity) activity).getClass().equals(cls)) {
-					return activity;
-				}
-			} else if (activity instanceof FragmentActivity) {
-				if (((FragmentActivity) activity).getClass().equals(cls)) {
 					return activity;
 				}
 			}
@@ -134,52 +127,38 @@ public class ActivitiesManager {
 	 * @param isFinish 是否结束Activity
 	 */
 	public void popAllActivityExceptOne(Class cls, boolean isFinish) {
-		while (true) {
-			Object activity = getLastActivity();
-			if (activity == null) {
-				break;
-			}
-			if (activity instanceof Activity) {
-				if (((Activity) activity).getClass().equals(cls)) {
-					break;
-				}
-			} else if (activity instanceof FragmentActivity) {
-				if (((FragmentActivity) activity).getClass().equals(cls)) {
-					break;
+		for (Object activity : activityStack) {
+			if (activity != null) {
+				if (activity instanceof Activity) {
+					if (!((Activity) activity).getClass().equals(cls)) {
+						popActivity(activity, isFinish);
+					}
 				}
 			}
-			popActivity(activity, isFinish);
 		}
 	}
 
-    /**
-     * 检查activity是否存在
-     * @param cls
-     * @return
-     */
-    public boolean checkActivityExist(Class cls) {
-        for (Object activity : activityStack) {
-            if (activity instanceof Activity) {
-                if (((Activity) activity).getClass().equals(cls)) {
-                    return true;
-                }
-            }
-        }
-        return false;
-    }
-
 	/**
-	 * 移除所有
+	 * 检查activity是否存在
+	 * @param cls
+	 * @return
 	 */
-	public void removeAllElements() {
-		activityStack.removeAllElements();
+	public boolean checkActivityExist(Class cls) {
+		for (Object activity : activityStack) {
+			if (activity instanceof Activity) {
+				if (((Activity) activity).getClass().equals(cls)) {
+					return true;
+				}
+			}
+		}
+		return false;
 	}
 
 	/**
 	 * 关闭
 	 */
 	public void close() {
-		activityStack.removeAllElements();
+		popAllActivity();
 		activityStack = null;
 		instance = null;
 	}
