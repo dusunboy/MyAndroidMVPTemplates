@@ -13,6 +13,9 @@ public class MyClass {
 
     private static final int PROJECT_FRAMEWORK = 1;
     private static final int DAGGER2MVP = 2;
+    private static final int ACTIVITY = 1;
+    private static final int FRAGMENT = 2;
+
     private static final boolean isDebug = false;
 
     public static void main(String args[]) {
@@ -42,7 +45,17 @@ public class MyClass {
             generateProjectFrameworkTemplates(in, buildPath, resourcesPath);
         }
         if (mode == DAGGER2MVP) {
-            generateDagger2MVPTemplates(in, buildPath, resourcesPath);
+            System.out.println("请输入数字选择：1.生成Activity 2.生成Fragment");
+            int type = Integer.valueOf(in.next());
+            do {
+                if (type == ACTIVITY || type == FRAGMENT) {
+                } else {
+                    System.out.println("输入格式不正确!");
+                    System.out.println(hint);
+                    type = Integer.valueOf(in.next());
+                }
+            } while (!(type == ACTIVITY ||type == FRAGMENT));
+            generateDagger2MVPTemplates(in, buildPath, resourcesPath, type);
         }
 
     }
@@ -78,8 +91,9 @@ public class MyClass {
      * @param in
      * @param buildPath
      * @param resourcesPath
+     * @param type
      */
-    private static void generateDagger2MVPTemplates(Scanner in, String buildPath, String resourcesPath) {
+    private static void generateDagger2MVPTemplates(Scanner in, String buildPath, String resourcesPath, int type) {
         System.out.println("请输入MVP模块名称和包名(格式:模块名,包名)：");
         String[] reads = in.next().split(",");
         do {
@@ -101,7 +115,14 @@ public class MyClass {
                 moduleName += modules[i] + "_";
             }
         }
-        String dagger2Name = "dagger2";
+        String dagger2Name;
+        if (type == ACTIVITY) {
+            dagger2Name = "dagger2";
+        } else {
+            dagger2Name = "fragment_dagger2";
+            moduleName = "fragment_" + moduleName;
+            reads[0] = "Fragment" + reads[0];
+        }
         try {
             copyModuleDirectory(resourcesPath + "/" + dagger2Name,
                     buildPath + templatesFileName + "/" + moduleName, reads, moduleName);
