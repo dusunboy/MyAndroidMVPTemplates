@@ -105,6 +105,13 @@ public class MyClass {
         String templatesFileName = "/dagger2-mvp-templates";
         System.out.println("开始复制模板...");
 //        //生产模块目录
+		String dagger2Name;
+        if (type == ACTIVITY) {
+            dagger2Name = "dagger2";
+        } else {
+            dagger2Name = "fragment_dagger2";
+            reads[0] = "Fragment" + reads[0];
+        }
         String[] modules = reads[0].split("(?<!^)(?=[A-Z])");
         String moduleName = "";
         for (int i = 0; i < modules.length; i++) {
@@ -114,15 +121,7 @@ public class MyClass {
             } else {
                 moduleName += modules[i] + "_";
             }
-        }
-        String dagger2Name;
-        if (type == ACTIVITY) {
-            dagger2Name = "dagger2";
-        } else {
-            dagger2Name = "fragment_dagger2";
-            moduleName = "fragment_" + moduleName;
-            reads[0] = "Fragment" + reads[0];
-        }
+        }        
         try {
             copyModuleDirectory(resourcesPath + "/" + dagger2Name,
                     buildPath + templatesFileName + "/" + moduleName, reads, moduleName);
