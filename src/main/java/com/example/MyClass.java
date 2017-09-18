@@ -202,7 +202,6 @@ public class MyClass {
                 copyModuleFile(new File(sourcePath + file.separator + filePath[i]),
                         newPath + newFileName, reads, moduleName);
             }
-
         }
     }
 
