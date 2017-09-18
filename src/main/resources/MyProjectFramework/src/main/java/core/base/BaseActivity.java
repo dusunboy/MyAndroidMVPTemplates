@@ -5,6 +5,7 @@ import android.os.Bundle;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import $Package.core.activities.ActivitiesManager;
 import $Package.core.fuction.AppUtil;
 
 /**
@@ -22,6 +23,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
         this.savedInstanceState = savedInstanceState;
         setContentView(getLayoutView(savedInstanceState));
 
+        ActivitiesManager.getInstance().pushActivity(this);
         initSystemBarTintManager();
         initToolbar();
         initView();
@@ -78,6 +80,7 @@ public abstract class BaseActivity extends RxAppCompatActivity {
 	@Override
 	protected void onDestroy() {
         AppUtil.clearTextLineCache();
+        ActivitiesManager.getInstance().popActivity(this ,false);
 		super.onDestroy();
     }
 
