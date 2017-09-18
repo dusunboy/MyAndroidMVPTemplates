@@ -125,6 +125,7 @@ public class MyClass {
         try {
             copyModuleDirectory(resourcesPath + "/" + dagger2Name,
                     buildPath + templatesFileName + "/" + moduleName, reads, moduleName);
+            (new File(buildPath + templatesFileName + "/" + moduleName + "/model")).mkdirs();
         } catch (Exception e) {
             e.printStackTrace();
         }
