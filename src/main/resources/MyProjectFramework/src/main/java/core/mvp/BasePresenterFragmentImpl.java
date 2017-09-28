@@ -39,7 +39,7 @@ public class BasePresenterFragmentImpl {
         return new JsonParser().parse(strResponse).getAsJsonObject();
     }
 
-    protected void clearUserInfo() {
+    public void clearUserInfo() {
         SPUtil.put(BaseConstant.PHONE_LOGIN, "");
         SPUtil.put(BaseConstant.IMEI, "");
         SPUtil.put(BaseConstant.USER_PHONE, "");

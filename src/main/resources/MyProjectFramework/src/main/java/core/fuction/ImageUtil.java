@@ -12,6 +12,7 @@ import android.graphics.PorterDuffXfermode;
 import android.graphics.Shader;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.util.Base64;
 import android.view.View;
 
 import $Package.core.config.BaseConstant;
@@ -1165,5 +1166,18 @@ public class ImageUtil {
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
+	}
+
+	/**
+	 * 将Bitmap转换成Base64字符串
+	 * @param bitmap
+	 * @param quality 图像质量 100表示不压缩
+	 * @return
+	 */
+	public static String bitmap2StrByBase64(Bitmap bitmap, int quality){
+		ByteArrayOutputStream bos=new ByteArrayOutputStream();
+		bitmap.compress(Bitmap.CompressFormat.JPEG, quality, bos);//参数100表示不压缩
+		byte[] bytes=bos.toByteArray();
+		return Base64.encodeToString(bytes, Base64.DEFAULT);
 	}
 }
