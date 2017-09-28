@@ -1180,4 +1180,14 @@ public class ImageUtil {
 		byte[] bytes=bos.toByteArray();
 		return Base64.encodeToString(bytes, Base64.DEFAULT);
 	}
+
+	/**
+	 * 将Base64字符串转换成Bitmap
+	 * @param strBase64
+	 * @return
+	 */
+	public static Bitmap strBase642Bitmap(String strBase64) {
+		byte[] bytes = Base64.decode(strBase64, Base64.DEFAULT);
+		return BitmapFactory.decodeByteArray(bytes, 0, bytes.length);
+	}
 }
