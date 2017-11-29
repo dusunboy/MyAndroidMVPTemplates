@@ -2,7 +2,7 @@ package $Package.core.base;
 
 import android.os.Bundle;
 
-
+import $Package.R;
 import com.readystatesoftware.systembartint.SystemBarTintManager;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import $Package.core.activities.ActivitiesManager;

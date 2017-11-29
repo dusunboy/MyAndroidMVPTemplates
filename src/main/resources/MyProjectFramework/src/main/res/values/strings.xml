@@ -4,6 +4,7 @@
     <string name="check_connection">无可用网络连接，请检查网络设置!</string>
     <string name="network_socket_timeout">网络连接超时</string>
     <string name="network_connection">网络连接异常,请检查您的网络状态</string>
+    <string name="download_link_invalid">下载链接不合法</string>
     <string name="path_invalid">路径无效</string>
     <string name="sunday">周日</string>
     <string name="monday">周一</string>

@@ -4,10 +4,13 @@ import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Environment;
+import android.support.v4.content.FileProvider;
 
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import $Package.BuildConfig;
 import $Package.R;
 import $Package.core.activities.ActivitiesManager;
 import $Package.core.async_http.AsyncHttpReq;

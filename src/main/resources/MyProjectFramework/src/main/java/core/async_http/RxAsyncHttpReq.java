@@ -477,7 +477,7 @@ public class RxAsyncHttpReq {
                     };
                     fileAsyncHttpResponseHandler.setTag(tag);
                     if (myRequestParams.getDownLoadMethod().equals(MyRequestParams.GET)) {
-                        AsyncHttpReq.getFile(BaseApp.getAppContext(), url, myRequestParams, fileAsyncHttpResponseHandler);
+                        AsyncHttpReq.getFile(BaseApp.getAppContext(), url, fileAsyncHttpResponseHandler);
                     } else {
                         AsyncHttpReq.postFile(BaseApp.getAppContext(), url,
                                 (myRequestParams.getJsonParams() == null || myRequestParams.getJsonParams().equals(""))

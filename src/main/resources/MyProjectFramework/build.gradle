@@ -37,16 +37,36 @@ android {
         targetSdkVersion TARGET_SDK_VERSION as int
         versionCode 1
         versionName "1.0.0"
-
+        aaptOptions.cruncherEnabled = false
+        aaptOptions.useNewCruncher = false
+        ndk {
+            //设置支持的SO库架构
+            abiFilters  'armeabi-v7a'// , 'x86', 'x86_64', 'arm64-v8a', 'mips' , //'armeabi'
+        }
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
+    }
+    //过滤掉不支持的平台
+    packagingOptions {
+        exclude "lib/arm64-v8a/librealm-jni.so"
+        exclude "lib/mips/librealm-jni.so"
+        exclude "lib/x86/librealm-jni.so"
+        exclude "lib/x86_64/librealm-jni.so"
+    }
+
+    splits {
+        abi {
+            enable true
+            reset()
+            include 'armeabi-v7a'
+        }
     }
     dexOptions {
         dexInProcess true
         preDexLibraries true
         javaMaxHeapSize "2g"//越大越好
-        incremental true
+//        incremental true
     }
     buildTypes {
         release {
@@ -58,7 +78,7 @@ android {
         }
         debug {
             minifyEnabled false
-            signingConfig signingConfigs.config
+//            signingConfig signingConfigs.config
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
