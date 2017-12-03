@@ -15,13 +15,11 @@ buildscript {
 allprojects {
     repositories {
         jcenter()
-        maven {
-            url 'https://github.com/uPhyca/stetho-realm/raw/master/maven-repo'
-        }
-        maven { url "https://jitpack.io" }
+        maven { url 'https://maven.google.com' }
     }
 }
 
 task clean(type: Delete) {
     delete rootProject.buildDir
 }
+0

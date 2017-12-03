@@ -137,6 +137,7 @@ dependencies {
     compile "com.android.support:support-v4:" + SUPPORT_V4_VERSION
     compile "com.android.support:recyclerview-v7:" + SUPPORT_V7_VERSION
     compile "com.android.support:design:" + SUPPORT_DESIGN_VERSION
+    compile 'com.android.support.constraint:constraint-layout:' + CONSTRAINT_LAYOUT_VERSION
     compile "com.loopj.android:android-async-http:" + ASYNC_HTTP_VERISON
 
     compile "io.reactivex.rxjava2:rxandroid:" + RXJAVA2_ANDROID_VERSION
