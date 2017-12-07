@@ -46,11 +46,11 @@ public class $Name extends BasePresenterFragment implements $NameView {
     }
 
     @Override
-    public void clickEvent() {
+    protected void delayLoad() {
     }
 
     @Override
-    protected void delayLoad() {
+    public void clickEvent() {
     }
 
 

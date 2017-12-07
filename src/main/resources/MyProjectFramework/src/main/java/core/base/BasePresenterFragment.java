@@ -81,6 +81,11 @@ public abstract class BasePresenterFragment extends RxFragment {
     protected abstract void init(@Nullable Bundle savedInstanceState);
 
     /**
+     * 当fragment可见时加载数据
+     */
+    protected abstract void delayLoad();
+
+    /**
      * RxBinding处理点击事件
      */
     public abstract void clickEvent();
@@ -91,11 +96,6 @@ public abstract class BasePresenterFragment extends RxFragment {
     protected void onVisible(){
         delayLoad();
     }
-
-    /**
-     * 当fragment可见时加载数据
-     */
-    protected abstract void delayLoad();
 
     /**
      * fragment不可见
