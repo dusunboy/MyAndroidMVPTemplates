@@ -25,7 +25,7 @@ public class $Name extends BasePresenterFragment implements $NameView {
 
     @Override
     protected View getLayoutView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        return inflater.inflate(R.layout.$ModuleName, null);
+        return inflater.inflate(R.layout.$ModuleName, container, false);
     }
 
     @Override
