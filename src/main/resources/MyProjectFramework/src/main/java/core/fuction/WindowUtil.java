@@ -19,7 +19,7 @@ import $Package.core.base.BaseApp;
 import java.lang.reflect.Field;
 
 /**
- * Window及UI缩放工具
+ * Window及UI缩放工具类
  * Created by Vincent on $Time.
  */
 public class WindowUtil {

@@ -14,7 +14,7 @@ import android.view.WindowManager;
 import $Package.R;
 
 /**
- * 获得屏幕相关的辅助类
+ * 屏幕相关的辅助类
  */
 public class ScreenUtil {
     private ScreenUtil() {

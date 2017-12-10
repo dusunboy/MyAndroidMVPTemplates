@@ -10,7 +10,7 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
- * 正在表达式验证工具类（验证身份证、车牌号等）
+ * 正则表达式验证工具类（验证身份证、车牌号等）
  * Created by Vincent on $Time.
  */
 public class ValidateUtil {

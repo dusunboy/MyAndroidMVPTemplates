@@ -6,7 +6,7 @@ import android.view.inputmethod.InputMethodManager;
 import android.widget.EditText;
 
 /**
- * 打开或关闭软键盘类
+ * 软键盘管理类
  * Created by Vincent on $Time.
  */
 public class KeyBoardUtil {
@@ -34,7 +34,7 @@ public class KeyBoardUtil {
     /**
      * 关闭软键盘
      * @param activity  上下文
-     */
+     */100
     public static void closeKeyBoard(Activity activity) {
         try {
             if (activity != null) {
