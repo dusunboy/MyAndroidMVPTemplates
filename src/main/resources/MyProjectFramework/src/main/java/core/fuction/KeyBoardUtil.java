@@ -34,7 +34,7 @@ public class KeyBoardUtil {
     /**
      * 关闭软键盘
      * @param activity  上下文
-     */100
+     */
     public static void closeKeyBoard(Activity activity) {
         try {
             if (activity != null) {

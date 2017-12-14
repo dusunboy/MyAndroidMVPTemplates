@@ -1,15 +1,16 @@
 package $Package.core.fuction;
 
+import android.text.TextUtils;
+
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 /**
  * 数字校验工具类
- * Created by Vincent on $Time.
+ * Created by Vincent on 2017-08-16 23:56:33.
  */
 public class RegexUtil {
-	
-	
+
 
 	/**
 	 * 车牌号码Pattern
@@ -46,10 +47,12 @@ public class RegexUtil {
 	public static final Pattern AREA_PATTERN = Pattern.compile("\\d*.?\\d*");
 
 	/**
-	 * 手机号码Pattern
+	 * 移动：134、135、136、137、138、139、150、151、157(TD)、158、159、187、188
+	 * 联通：130、131、132、152、155、156、185、186 电信：133、153、180、189、（1349卫通）
+	 * 总结起来就是第一位必定为1，第二位必定为3或5或8，其他位置的可以为0-9
 	 */
 	public static final Pattern MOBILE_NUMBER_PATTERN = Pattern
-			.compile("\\d{11}");
+			.compile("[1][34578]\\d{9}");
 
 	/**
 	 * 银行帐号Pattern
@@ -70,7 +73,7 @@ public class RegexUtil {
 
 	/**
 	 * 车牌号码是否正确
-	 * 
+	 *
 	 * @param s
 	 * @return
 	 */
@@ -81,7 +84,7 @@ public class RegexUtil {
 
 	/**
 	 * 证件号码是否正确
-	 * 
+	 *
 	 * @param s
 	 * @return
 	 */
@@ -92,7 +95,7 @@ public class RegexUtil {
 
 	/**
 	 * 编码是否正确
-	 * 
+	 *
 	 * @param s
 	 * @return
 	 */
@@ -103,7 +106,7 @@ public class RegexUtil {
 
 	/**
 	 * 固话编码是否正确
-	 * 
+	 *
 	 * @param s
 	 * @return
 	 */
@@ -114,7 +117,7 @@ public class RegexUtil {
 
 	/**
 	 * 邮政编码是否正确
-	 * 
+	 *
 	 * @param s
 	 * @return
 	 */
@@ -125,7 +128,7 @@ public class RegexUtil {
 
 	/**
 	 * 面积是否正确
-	 * 
+	 *
 	 * @param s
 	 * @return
 	 */
@@ -136,18 +139,23 @@ public class RegexUtil {
 
 	/**
 	 * 手机号码否正确
-	 * 
-	 * @param s
+	 *
+	 * @param phone
 	 * @return
 	 */
-	public static boolean isMobileNumber(String s) {
-		Matcher m = MOBILE_NUMBER_PATTERN.matcher(s);
-		return m.matches();
+	public static boolean isMobileNumber(String phone) {
+		if (TextUtils.isEmpty(phone))
+			return false;
+		else {
+			// "[1]"代表第1位为数字1，"[358]"代表第二位可以为3、5、8中的一个，"\\d{9}"代表后面是可以是0～9的数字，有9位。
+			Matcher matcher = MOBILE_NUMBER_PATTERN.matcher(phone);
+			return matcher.matches();
+		}
 	}
 
 	/**
 	 * 银行账号否正确
-	 * 
+	 *
 	 * @param s
 	 * @return
 	 */
@@ -158,6 +166,7 @@ public class RegexUtil {
 
 	/**
 	 * 是否是数字
+	 *
 	 * @param num
 	 * @return
 	 */
@@ -166,8 +175,32 @@ public class RegexUtil {
 		return m.matches();
 	}
 
+	/**
+	 * 是否是邮箱帐号
+	 *
+	 * @param mail
+	 * @return
+	 */
 	public static boolean isEmail(String mail) {
 		Matcher m = EMAIL_PATTERN.matcher(mail);
 		return m.matches();
 	}
+
+	/**
+	 * 比较真实完整的判断身份证号码的工具
+	 *
+	 * @param IdCard 用户输入的身份证号码
+	 * @return [true符合规范, false不符合规范]
+	 */
+	public static boolean isRealIDCard(String IdCard) {
+		if (IdCard != null) {
+			int correct = new IdCardUtil(IdCard).isCorrect();
+			if (0 == correct) {// 符合规范
+				return true;
+			}
+		}
+		return false;
+	}
+
 }
+

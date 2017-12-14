@@ -121,4 +121,7 @@ public class BaseConstant {
     public static final String VERSION = "version";
     public static final String POSITION = "positon";
     public static final String APK_PATH = "apk_path";
+    public static final String PICTURES_PATH = "pictures_path";
+    public static final String PHONE_MODEL = "phone_model";
+    public static final String PHONE_IMEI = "phone_imei";
 }

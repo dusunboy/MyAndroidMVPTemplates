@@ -174,5 +174,9 @@ dependencies {
     testCompile "com.squareup.leakcanary:leakcanary-android-no-op:" + LEAKCANARY_VERSION
     compile "com.android.support:multidex:" + MULTIDEX_VERSION
     compile 'com.readystatesoftware.systembartint:systembartint:' + SYSTEMBARTINT_VERSION
+    compile 'com.contrarywind:Android-PickerView:' + ANDROID_PICKER_VIEW
+    compile 'com.google.android:flexbox:' + FLEX_BOX_VERSION
+    compile 'com.zhihu.android:matisse:' + MATISSE_VERSION
+    compile "pub.devrel:easypermissions:" + EASYPERMISSIONS_VERSION
 
 }
