@@ -11,10 +11,10 @@ import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 
 /**
- * 加密解密工具
+ * DES加密解密工具
  * Created by Vincent on $Time.
  */
-public class EncryptUtil {
+public class DESEncryptUtil {
 
     public static final int DEFAULT = 0;
 
