@@ -107,7 +107,9 @@ public abstract class BasePresenterFragment extends RxFragment {
         super.onDestroy();
         //监控fragment泄漏
         RefWatcher refWatcher = MyApp.getRefWatcher(getActivity());
-        refWatcher.watch(this);
+        if (refWatcher != null) {
+            refWatcher.watch(this);
+        }
     }
 
     @Override
