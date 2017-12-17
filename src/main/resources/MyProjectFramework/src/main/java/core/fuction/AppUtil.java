@@ -19,10 +19,12 @@ import android.telephony.TelephonyManager;
 import $Package.core.base.BaseApp;
 import $Package.core.model.CallLogBean;
 
+import java.io.BufferedReader;
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
+import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.lang.reflect.Field;
 import java.security.MessageDigest;
@@ -451,5 +453,27 @@ public class AppUtil {
             }
         }
         return false;
+    }
+
+    /**
+     * 获取Assets里的Json
+     * @param fileName
+     * @return
+     */
+    public static String getAssetsJson(String fileName) {
+
+        StringBuilder stringBuilder = new StringBuilder();
+        try {
+            AssetManager assetManager = BaseApp.getAppContext().getAssets();
+            BufferedReader bf = new BufferedReader(new InputStreamReader(
+                    assetManager.open(fileName)));
+            String line;
+            while ((line = bf.readLine()) != null) {
+                stringBuilder.append(line);
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return stringBuilder.toString();
     }
 }

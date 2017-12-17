@@ -11,7 +11,7 @@ import javax.crypto.spec.DESKeySpec;
 import javax.crypto.spec.IvParameterSpec;
 
 /**
- * DES加密解密工具
+ * DES加密解密类
  * Created by Vincent on $Time.
  */
 public class DESEncryptUtil {

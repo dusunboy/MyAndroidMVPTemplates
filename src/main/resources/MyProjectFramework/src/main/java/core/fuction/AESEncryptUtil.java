@@ -11,7 +11,7 @@ import javax.crypto.Cipher;
 import javax.crypto.spec.SecretKeySpec;
 
 /**
- *  AES256位加密
+ *  AES加密类
  * Created by Vincent on $Time.
  */
 public class AESEncryptUtil {

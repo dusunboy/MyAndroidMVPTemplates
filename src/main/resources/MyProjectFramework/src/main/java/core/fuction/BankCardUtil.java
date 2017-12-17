@@ -1,8 +1,8 @@
 package $Package.core.fuction;
 
 /**
- * 银行卡校验工具
- * Created by Vincent on 2017/10/13.
+ * 银行卡校验类
+ * Created by Vincent on $Time.
  */
 public class BankCardUtil {
 

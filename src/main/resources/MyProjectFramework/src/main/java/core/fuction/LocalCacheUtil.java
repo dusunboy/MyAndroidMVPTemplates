@@ -7,7 +7,7 @@ import java.io.File;
 import java.io.IOException;
 
 /**
- * 本地缓存工具
+ * 本地缓存类
  * Created by Vincent on $Time.
  */
 public class LocalCacheUtil {

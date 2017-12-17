@@ -3,8 +3,8 @@ package $Package.core.fuction;
 import android.text.TextUtils;
 
 /**
- * 身份证的工具类
- * Created by Vincent on 2017/10/13.
+ * 身份证的校验类
+ * Created by Vincent on $Time.
  */
 public class IdCardUtil {
 
