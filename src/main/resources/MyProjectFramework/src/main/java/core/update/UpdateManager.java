@@ -7,9 +7,12 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
 import android.support.v4.content.FileProvider;
+import android.support.v7.app.AlertDialog;
+import android.view.KeyEvent;
+import android.view.LayoutInflater;
+import android.view.View;
 
-import com.trello.rxlifecycle2.android.ActivityEvent;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.daimajia.numberprogressbar.NumberProgressBar;
 import $Package.BuildConfig;
 import $Package.R;
 import $Package.core.activities.ActivitiesManager;
@@ -18,14 +21,12 @@ import $Package.core.async_http.AsyncHttpResponse;
 import $Package.core.async_http.MyRequestParams;
 import $Package.core.async_http.RxAsyncHttpReq;
 import $Package.core.config.BaseConstant;
-import $Package.core.fuction.DensityUtil;
 import $Package.core.fuction.SPUtil;
 import $Package.core.retrofit.BaseResourceObserver;
 import $Package.core.rxjava.RxSchedulers;
 import $Package.core.view.CustomToast;
-import $Package.core.view.custom_dialog.CustomAlertDialog;
-import $Package.core.view.custom_dialog.CustomProgressDialog;
-import $Package.core.view.custom_dialog.OnDismiss;
+import com.trello.rxlifecycle2.android.ActivityEvent;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -40,24 +41,22 @@ import io.reactivex.schedulers.Schedulers;
 
 /**
  * 升级Apk管理类
- * Created by Vincent on $Time.
+ * Created by Vincent on 2017-12-02 16:32:29.
  */
-public class UpdateManager implements OnDismiss {
+public class UpdateManager {
 
     private RxAppCompatActivity activity;
-    private CustomProgressDialog customProgressDialog;
     private String url;
     private boolean isForceClose;
-    private boolean isConfirmDialog;
-    private String directory;
     private int color;
     private String changeLog;
     private boolean isShow;
     private boolean isUpdate;
+    private NumberProgressBar numberProgressBar;
+    private AlertDialog alertProgressDialog;
 
     public UpdateManager(RxAppCompatActivity rxAppCompatActivity) {
         color = 0;
-        directory = SPUtil.getString(BaseConstant.DIRECTORY);
         this.activity = rxAppCompatActivity;
     }
 
@@ -66,22 +65,17 @@ public class UpdateManager implements OnDismiss {
      */
     public void showNoticeDialog() {
         isShow = true;
-        CustomAlertDialog.Builder builder = new CustomAlertDialog.Builder(activity);
-        builder.setTheme(color);
-        builder.create(CustomAlertDialog.NORMAL);
-        builder.setTitle(R.string.soft_update_title);
-        builder.setOnDismissListener(this);
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
+        alertDialog.setTitle(R.string.soft_update_title);
         if (!changeLog.equals("")) {
-            builder.setMessageTextSize(16);
-            builder.setMessage(activity.getString(R.string.changeLog) + "\n" + changeLog);
+            alertDialog.setMessage(activity.getString(R.string.changeLog) + "\n" + changeLog);
         } else {
-            builder.setMessage(activity.getString(R.string.soft_update_info));
+            alertDialog.setMessage(activity.getString(R.string.soft_update_info));
         }
-        builder.setPositiveButton(R.string.update,
+        alertDialog.setPositiveButton(R.string.update,
                 new OnClickListener() {
                     @Override
                     public void onClick(DialogInterface dialog, int which) {
-                        isConfirmDialog = true;
                         dialog.dismiss();
                         if (Environment.getExternalStorageState().equals(
                                 Environment.MEDIA_MOUNTED)) {
@@ -91,15 +85,47 @@ public class UpdateManager implements OnDismiss {
                         }
                     }
                 });
-        builder.setNegativeButton(R.string.soft_update_later,
+        alertDialog.setNegativeButton(R.string.soft_update_later,
                 new OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
+                        forceClose();
                     }
                 });
-        builder.show();
+        alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode) {
+                        case KeyEvent.KEYCODE_BACK:
+                            forceClose();
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
+        alertDialog.show();
     }
 
+    /**
+     * 强制关闭
+     */
+    private void forceClose() {
+        if (isForceClose) {
+            CustomToast.getInstance().show(activity.getString(R.string.please_update_version));
+            Observable.just("")
+                    .compose(activity.bindToLifecycle())
+                    .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
+                    .delay(1000, TimeUnit.MILLISECONDS)
+                    .subscribe(new Consumer<String>() {
+                        @Override
+                        public void accept(@NonNull String s) throws Exception {
+                            popAllActivity();
+                        }
+                    });
+        }
+    }
 
     /**
      * 显示下载提示框
@@ -111,19 +137,53 @@ public class UpdateManager implements OnDismiss {
         }
         isShow = true;
         isUpdate = true;
-        customProgressDialog = new CustomProgressDialog(activity, activity.getString(R.string.update));
-        customProgressDialog.setTheme(color);
-        customProgressDialog.create();
-        customProgressDialog.getBuilder().setOnDismissListener(this);
-        customProgressDialog.setNegativeButton(activity.getString(R.string.cancel), new OnClickListener() {
+        AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
+        View dialog_update_manager = LayoutInflater.from(activity).inflate(R.layout.dialog_uplate_manager, null);
+        numberProgressBar = (NumberProgressBar) dialog_update_manager.findViewById(R.id.numberProgressBar);
+        alertDialog.setTitle(activity.getString(R.string.update))
+                .setView(dialog_update_manager);
+        alertDialog.setCancelable(false);
+        alertDialog.setNegativeButton(activity.getString(R.string.cancel), new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                dialog.dismiss();
+                if (isUpdate) {
+                    isUpdate = false;
+                    AsyncHttpReq.cancelRequestsByTAG(activity.getLocalClassName(), true);
+                }
+                forceClose();
             }
         });
-        customProgressDialog.setMax(100);
-        customProgressDialog.show();
+        alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
+            @Override
+            public boolean onKey(DialogInterface dialog, int keyCode, KeyEvent event) {
+                if(event.getAction() == KeyEvent.ACTION_DOWN) {
+                    switch (keyCode) {
+                        case KeyEvent.KEYCODE_BACK:
+                            if (isUpdate) {
+                                isUpdate = false;
+                                AsyncHttpReq.cancelRequestsByTAG(activity.getLocalClassName(), true);
+                            }
+                            forceClose();
+                            break;
+                    }
+                }
+                return false;
+            }
+        });
+        alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
+            @Override
+            public void onDismiss(DialogInterface dialog) {
+                if (isUpdate) {
+                    isUpdate = false;
+                    AsyncHttpReq.cancelRequestsByTAG(activity.getLocalClassName(), true);
+                }
+                forceClose();
+            }
+        });
+        alertDialog.show();
+        alertProgressDialog = alertDialog.create();
         MyRequestParams myRequestParams = new MyRequestParams();
+        myRequestParams.setDownLoadMethod(MyRequestParams.GET);
         myRequestParams.setDownloadSavePath(SPUtil.getString(BaseConstant.APK_PATH) + "/"
                 + activity.getString(R.string.app_name) + ".apk");
         ArrayList<FlowableProcessor<AsyncHttpResponse>> observables = new RxAsyncHttpReq().download(activity, url, myRequestParams);
@@ -133,7 +193,7 @@ public class UpdateManager implements OnDismiss {
                 .subscribe(new Consumer<AsyncHttpResponse>() {
                     @Override
                     public void accept(@NonNull AsyncHttpResponse asyncHttpResponse) throws Exception {
-                        customProgressDialog.setProgress(asyncHttpResponse.getProgressPercent());
+                        numberProgressBar.setProgress(asyncHttpResponse.getProgressPercent());
                     }
                 });
         observables.get(0).compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
@@ -143,18 +203,20 @@ public class UpdateManager implements OnDismiss {
                     @Override
                     public void onComplete() {
                         isUpdate = false;
-                        customProgressDialog.dismiss();
+                        alertProgressDialog.dismiss();
                     }
 
                     @Override
                     public void onNext(AsyncHttpResponse asyncHttpResponse) {
                         super.onNext(asyncHttpResponse);
+                        alertProgressDialog.dismiss();
                         installApk(asyncHttpResponse.getFile());
                     }
 
                     @Override
                     public void onError(Throwable e) {
                         super.onError(e);
+                        alertProgressDialog.dismiss();
                         CustomToast.getInstance().show(activity.getString(R.string.download_failed));
                     }
                 });
@@ -172,7 +234,6 @@ public class UpdateManager implements OnDismiss {
 
     /**
      * 设置颜色主题
-     *
      * @param color
      */
     public void setTheme(int color) {
@@ -221,15 +282,16 @@ public class UpdateManager implements OnDismiss {
     }
 
     /**
-     * @param url the url to set
+     * 设置升级地址
+     * @param url
      */
     public void setUrl(String url) {
         this.url = url;
     }
 
     /**
-     * 是否显示
-     * @return
+     * 升级提示框是否显示
+     * @return boolean
      */
     public boolean isShow() {
         return isShow;
@@ -237,33 +299,6 @@ public class UpdateManager implements OnDismiss {
 
     public void setShow(boolean show) {
         isShow = show;
-    }
-
-    @Override
-    public void onDismissCall(DialogInterface dialog, int type) {
-        dialog.dismiss();
-        if (!isConfirmDialog) {
-            if (isUpdate) {
-                isUpdate = false;
-                AsyncHttpReq.cancelRequestsByTAG(activity.getLocalClassName(), true);
-            }
-            if (isForceClose) {
-                CustomToast.getInstance().show(activity.getString(R.string.please_update_version));
-                Observable.just("")
-                        .compose(activity.bindToLifecycle())
-                        .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
-                        .delay(1000, TimeUnit.MILLISECONDS)
-                        .subscribe(new Consumer<String>() {
-                            @Override
-                            public void accept(@NonNull String s) throws Exception {
-                                popAllActivity();
-                            }
-                        });
-            }
-        } else {
-            isConfirmDialog = false;
-        }
-        isShow = false;
     }
 
     /**
