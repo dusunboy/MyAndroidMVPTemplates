@@ -4,10 +4,10 @@ import android.content.Intent;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 import $Package.core.config.BaseConstant;
 import $Package.core.fuction.SPUtil;
 import $Package.core.retrofit.RetrofitManager;
+import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import retrofit2.Retrofit;
 
@@ -90,5 +90,24 @@ public class BasePresenterActivityImpl {
     public void start2ActivityForResult(Class aClass, int requestCode){
         Intent intent = new Intent(activity, aClass);
         activity.startActivityForResult(intent, requestCode);
+    }
+
+    /**
+     * 取消请求
+     * @param tag
+     */
+    public void cancelRequest(String tag) {
+        if (retrofitManager != null) {
+            retrofitManager.cancel(tag);
+        }
+    }
+
+    /**
+     * 取消全部请求
+     */
+    public void cancelAllRequest() {
+        if (retrofitManager != null) {
+            retrofitManager.cancelAll();
+        }
     }
 }
