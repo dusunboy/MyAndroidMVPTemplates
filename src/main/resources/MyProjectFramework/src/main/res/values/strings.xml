@@ -40,4 +40,5 @@
     <string name="select_picture_or_take_picture_need_authorization">选择图片或者拍照需要系统授权权限</string>
     <string name="this_function_requires_permissions_authorize_camera">此功能需要系统授权存储照片和拍照权限,需要打开设置页面去授权吗?</string>
     <string name="denied_permissions_photo_take_picture_not_use_function">您拒绝了选取图片和拍照所需要的权限，将不能正常使用此功能</string>
+    <string name="downloading">下载中...</string>
 </resources>

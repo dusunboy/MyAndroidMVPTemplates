@@ -1,11 +1,15 @@
 package $Package.core.update;
 
+import android.app.NotificationManager;
+import android.app.PendingIntent;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.DialogInterface.OnClickListener;
 import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Environment;
+import android.support.v4.app.NotificationCompat;
 import android.support.v4.content.FileProvider;
 import android.support.v7.app.AlertDialog;
 import android.view.KeyEvent;
@@ -25,6 +29,7 @@ import $Package.core.fuction.SPUtil;
 import $Package.core.retrofit.BaseResourceObserver;
 import $Package.core.rxjava.RxSchedulers;
 import $Package.core.view.CustomToast;
+import $Package.project.main.MainActivity;
 import com.trello.rxlifecycle2.android.ActivityEvent;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
@@ -48,15 +53,80 @@ public class UpdateManager {
     private RxAppCompatActivity activity;
     private String url;
     private boolean isForceClose;
-    private int color;
     private String changeLog;
     private boolean isShow;
     private boolean isUpdate;
     private NumberProgressBar numberProgressBar;
     private AlertDialog alertProgressDialog;
+    private static String UPDATE_VERSION = "update_version";
+    private Class<MainActivity> notificationContentIntent;
+    private NotificationManager notificationManager;
+    private NotificationCompat.Builder notificationBuilder;
 
-    public UpdateManager(RxAppCompatActivity rxAppCompatActivity) {
-        color = 0;
+    public static class Builder {
+        private final RxAppCompatActivity activity;
+        private String url;
+        private String changeLog;
+        private boolean isForceClose;
+        private boolean isShow;
+        private UpdateManager updateManager;
+        private Class<MainActivity> notificationContentIntent;
+
+        public Builder(RxAppCompatActivity rxAppCompatActivity) {
+            this.activity = rxAppCompatActivity;
+        }
+
+        /**
+         * 设置升级地址
+         * @param url
+         * @return
+         */
+        public Builder setUrl(String url) {
+            this.url = url;
+            return this;
+        }
+
+        /**
+         * 设置更新日志
+         * @param changeLog
+         * @return
+         */
+        public Builder setChangeLog(String changeLog) {
+            this.changeLog = changeLog;
+            return this;
+        }
+
+        /**
+         * 设置是否强制关闭
+         * @param isForceClose
+         * @return
+         */
+        public Builder setIsForceClose(boolean isForceClose) {
+            this.isForceClose = isForceClose;
+            return this;
+        }
+
+        /**
+         * 设置消息栏打开的Activity
+         * @param notificationContentIntent
+         * @return
+         */
+        public Builder setNotificationContentIntent(Class<MainActivity> notificationContentIntent) {
+            this.notificationContentIntent = notificationContentIntent;
+            return this;
+        }
+
+        public UpdateManager build() {
+            updateManager = new UpdateManager(activity);
+            updateManager.setUrl(url);
+            updateManager.setChangeLog(changeLog);
+            updateManager.setIsForceClose(isForceClose);
+            updateManager.setNotificationContentIntent(notificationContentIntent);
+            return updateManager;
+        }
+    }
+
+    private UpdateManager(RxAppCompatActivity rxAppCompatActivity) {
         this.activity = rxAppCompatActivity;
     }
 
@@ -89,7 +159,7 @@ public class UpdateManager {
                 new OnClickListener() {
                     public void onClick(DialogInterface dialog, int which) {
                         dialog.dismiss();
-                        forceClose();
+                        closeDialog();
                     }
                 });
         alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
@@ -98,7 +168,8 @@ public class UpdateManager {
                 if(event.getAction() == KeyEvent.ACTION_DOWN) {
                     switch (keyCode) {
                         case KeyEvent.KEYCODE_BACK:
-                            forceClose();
+                            dialog.dismiss();
+                            closeDialog();
                             break;
                     }
                 }
@@ -108,10 +179,41 @@ public class UpdateManager {
         alertDialog.show();
     }
 
+
     /**
-     * 强制关闭
+     * 发送下载更新通知
      */
-    private void forceClose() {
+    private void sendUpdateNotification() {
+        //获取NotificationManager实例
+        notificationManager = (NotificationManager) activity.getSystemService(Context.NOTIFICATION_SERVICE);
+        //实例化NotificationCompat.Builde并设置相关属性
+        notificationBuilder = new NotificationCompat.Builder(activity, UPDATE_VERSION)
+                //设置小图标
+                .setSmallIcon(R.mipmap.ic_launcher)
+                //设置通知标题
+                .setContentTitle(activity.getString(R.string.update))
+                //点击通知后自动清除
+//                .setAutoCancel(true)
+                //设置通知内容
+                .setContentText(activity.getString(R.string.downloading));
+
+        if (notificationContentIntent != null) {
+            //获取PendingIntent
+            Intent mainIntent = new Intent(activity, notificationContentIntent);
+            PendingIntent mainPendingIntent = PendingIntent.getActivity(activity, 0, mainIntent, PendingIntent.FLAG_UPDATE_CURRENT);
+            notificationBuilder.setContentIntent(mainPendingIntent);
+        }
+        notificationBuilder.setProgress(100, 0, false);
+    }
+
+    /**
+     * 关闭提示框
+     */
+    private void closeDialog() {
+        if (isUpdate) {
+            isUpdate = false;
+            AsyncHttpReq.cancelRequestsByTAG(activity.getLocalClassName(), true);
+        }
         if (isForceClose) {
             CustomToast.getInstance().show(activity.getString(R.string.please_update_version));
             Observable.just("")
@@ -125,6 +227,9 @@ public class UpdateManager {
                         }
                     });
         }
+        if (notificationManager != null) {
+            notificationManager.cancelAll();
+        }
     }
 
     /**
@@ -137,6 +242,7 @@ public class UpdateManager {
         }
         isShow = true;
         isUpdate = true;
+        sendUpdateNotification();
         AlertDialog.Builder alertDialog = new AlertDialog.Builder(activity);
         View dialog_update_manager = LayoutInflater.from(activity).inflate(R.layout.dialog_uplate_manager, null);
         numberProgressBar = (NumberProgressBar) dialog_update_manager.findViewById(R.id.numberProgressBar);
@@ -146,11 +252,8 @@ public class UpdateManager {
         alertDialog.setNegativeButton(activity.getString(R.string.cancel), new OnClickListener() {
             @Override
             public void onClick(DialogInterface dialog, int which) {
-                if (isUpdate) {
-                    isUpdate = false;
-                    AsyncHttpReq.cancelRequestsByTAG(activity.getLocalClassName(), true);
-                }
-                forceClose();
+                dialog.dismiss();
+                closeDialog();
             }
         });
         alertDialog.setOnKeyListener(new DialogInterface.OnKeyListener() {
@@ -159,11 +262,8 @@ public class UpdateManager {
                 if(event.getAction() == KeyEvent.ACTION_DOWN) {
                     switch (keyCode) {
                         case KeyEvent.KEYCODE_BACK:
-                            if (isUpdate) {
-                                isUpdate = false;
-                                AsyncHttpReq.cancelRequestsByTAG(activity.getLocalClassName(), true);
-                            }
-                            forceClose();
+                            dialog.dismiss();
+                            closeDialog();
                             break;
                     }
                 }
@@ -173,11 +273,7 @@ public class UpdateManager {
         alertDialog.setOnDismissListener(new DialogInterface.OnDismissListener() {
             @Override
             public void onDismiss(DialogInterface dialog) {
-                if (isUpdate) {
-                    isUpdate = false;
-                    AsyncHttpReq.cancelRequestsByTAG(activity.getLocalClassName(), true);
-                }
-                forceClose();
+                closeDialog();
             }
         });
         alertDialog.show();
@@ -194,6 +290,8 @@ public class UpdateManager {
                     @Override
                     public void accept(@NonNull AsyncHttpResponse asyncHttpResponse) throws Exception {
                         numberProgressBar.setProgress(asyncHttpResponse.getProgressPercent());
+                        notificationBuilder.setProgress(100, asyncHttpResponse.getProgressPercent(), false);
+                        notificationManager.notify(UPDATE_VERSION,hashCode(), notificationBuilder.build());
                     }
                 });
         observables.get(0).compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
@@ -209,7 +307,6 @@ public class UpdateManager {
                     @Override
                     public void onNext(AsyncHttpResponse asyncHttpResponse) {
                         super.onNext(asyncHttpResponse);
-                        alertProgressDialog.dismiss();
                         installApk(asyncHttpResponse.getFile());
                     }
 
@@ -228,24 +325,17 @@ public class UpdateManager {
      *
      * @param isForceClose
      */
-    public void setIsForceClose(boolean isForceClose) {
+    private void setIsForceClose(boolean isForceClose) {
         this.isForceClose = isForceClose;
     }
 
-    /**
-     * 设置颜色主题
-     * @param color
-     */
-    public void setTheme(int color) {
-        this.color = color;
-    }
 
     /**
      * 设置更新日志
      *
      * @param changeLog
      */
-    public void setChangeLog(String changeLog) {
+    private void setChangeLog(String changeLog) {
         this.changeLog = changeLog;
     }
 
@@ -275,6 +365,7 @@ public class UpdateManager {
 
 
     /**
+     * 获取升级地址
      * @return the url
      */
     public String getUrl() {
@@ -285,7 +376,7 @@ public class UpdateManager {
      * 设置升级地址
      * @param url
      */
-    public void setUrl(String url) {
+    private void setUrl(String url) {
         this.url = url;
     }
 
@@ -299,6 +390,14 @@ public class UpdateManager {
 
     public void setShow(boolean show) {
         isShow = show;
+    }
+
+    /**
+     * 设置消息栏打开的Activity
+     * @param notificationContentIntent
+     */
+    private void setNotificationContentIntent(Class<MainActivity> notificationContentIntent) {
+        this.notificationContentIntent = notificationContentIntent;
     }
 
     /**
