@@ -7,6 +7,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import $Package.core.config.BaseConstant;
 import $Package.core.fuction.SPUtil;
+import $Package.core.fuction.AppUtil;
 import $Package.core.retrofit.RetrofitManager;
 import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
@@ -39,12 +40,11 @@ public class BasePresenterFragmentImpl {
         return new JsonParser().parse(strResponse).getAsJsonObject();
     }
 
+    /**
+     * 清除用户信息
+     */
     public void clearUserInfo() {
-        SPUtil.put(BaseConstant.PHONE_LOGIN, "");
-        SPUtil.put(BaseConstant.IMEI, "");
-        SPUtil.put(BaseConstant.USER_PHONE, "");
-        SPUtil.put(BaseConstant.USER_ID, "");
-        SPUtil.put(BaseConstant.USER_NAME, "");
+        AppUtil.clearUserInfo();
     }
 
     /**

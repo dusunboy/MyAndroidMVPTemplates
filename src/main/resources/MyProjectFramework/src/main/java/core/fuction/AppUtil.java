@@ -477,4 +477,10 @@ public class AppUtil {
         }
         return stringBuilder.toString();
     }
+
+    /**
+     * 清除用户信息
+     */
+    public static void clearUserInfo() {
+    }
 }
