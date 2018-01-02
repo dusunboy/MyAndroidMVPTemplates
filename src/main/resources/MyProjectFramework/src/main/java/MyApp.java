@@ -64,13 +64,11 @@ public class MyApp extends BaseApp {
          */
         SPUtil.put(BaseConstant.IS_DEBUG, true);
         /**
-         * 判断版本 official test dev
+         * 判断APP版本 official test dev
          */
         SPUtil.put(BaseConstant.VERSION, "dev");
+        // 接口地址
         if (SPUtil.getString(BaseConstant.VERSION).equals("dev")) { //开发版本
-            /**
-             * 接口地址
-             */
             SPUtil.put(BaseConstant.BASE_URL, "http://dev.com");
         } else if (SPUtil.getString(BaseConstant.VERSION).equals("test")) { //测试版本
             SPUtil.put(BaseConstant.BASE_URL, "http://test.com");
