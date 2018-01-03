@@ -6,6 +6,7 @@ import $Package.project.retrofit_config.MyAuthenticator;
 import $Package.project.retrofit_config.ResponseInterceptor;
 
 import java.net.ProxySelector;
+import java.util.List;
 import java.util.concurrent.TimeUnit;
 
 import okhttp3.Authenticator;
@@ -13,6 +14,8 @@ import okhttp3.Call;
 import okhttp3.ConnectionPool;
 import okhttp3.Interceptor;
 import okhttp3.OkHttpClient;
+import okhttp3.Protocol;
+import okhttp3.Response;
 import okhttp3.logging.HttpLoggingInterceptor;
 import retrofit2.Retrofit;
 import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory;
@@ -170,6 +173,38 @@ public class RetrofitManager {
          */
         public OkHttpClientBuilder connectionPool(ConnectionPool connectionPool) {
             builder.connectionPool(connectionPool);
+            return this;
+        }
+
+        /**
+         * Configure the protocols used by this client to communicate with remote servers. By default
+         * this client will prefer the most efficient transport available, falling back to more
+         * ubiquitous protocols. Applications should only call this method to avoid specific
+         * compatibility problems, such as web servers that behave incorrectly when HTTP/2 is enabled.
+         *
+         * <p>The following protocols are currently supported:
+         *
+         * <ul>
+         *     <li><a href="http://www.w3.org/Protocols/rfc2616/rfc2616.html">http/1.1</a>
+         *     <li><a href="http://tools.ietf.org/html/draft-ietf-httpbis-http2-17">h2</a>
+         * </ul>
+         *
+         * <p><strong>This is an evolving set.</strong> Future releases include support for transitional
+         * protocols. The http/1.1 transport will never be dropped.
+         *
+         * <p>If multiple protocols are specified, <a
+         * href="http://tools.ietf.org/html/draft-ietf-tls-applayerprotoneg">ALPN</a> will be used to
+         * negotiate a transport.
+         *
+         * <p>{@link Protocol#HTTP_1_0} is not supported in this set. Requests are initiated with {@code
+         * HTTP/1.1} only. If the server responds with {@code HTTP/1.0}, that will be exposed by {@link
+         * Response#protocol()}.
+         *
+         * @param protocols the protocols to use, in order of preference. The list must contain {@link
+         * Protocol#HTTP_1_1}. It must not contain null or {@link Protocol#HTTP_1_0}.
+         */
+        public OkHttpClientBuilder protocols(List<Protocol> protocols) {
+            builder.protocols(protocols);
             return this;
         }
 

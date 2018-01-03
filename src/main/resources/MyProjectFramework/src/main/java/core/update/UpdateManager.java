@@ -276,8 +276,7 @@ public class UpdateManager {
                 closeDialog();
             }
         });
-        alertDialog.show();
-        alertProgressDialog = alertDialog.create();
+        alertProgressDialog = alertDialog.show();
         MyRequestParams myRequestParams = new MyRequestParams();
         myRequestParams.setDownLoadMethod(MyRequestParams.GET);
         myRequestParams.setDownloadSavePath(SPUtil.getString(BaseConstant.APK_PATH) + "/"
