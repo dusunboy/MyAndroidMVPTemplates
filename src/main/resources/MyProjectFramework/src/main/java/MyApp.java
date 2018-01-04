@@ -64,7 +64,7 @@ public class MyApp extends BaseApp {
          */
         SPUtil.put(BaseConstant.IS_DEBUG, true);
         /**
-         * 判断APP版本 official test dev
+         * 判断APP版本 BaseConstant.OFFICIAL BaseConstant.TEST dev
          */
         SPUtil.put(BaseConstant.VERSION, "dev");
         // 接口地址

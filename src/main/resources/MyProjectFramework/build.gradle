@@ -94,6 +94,7 @@ android {
             buildConfigField "String","file_provider_authorities","\"$Package.demo.fileprovider\""
             manifestPlaceholders = [
                     FILE_PROVIDER_AUTHORITIES:"$Package.demo.fileprovider",
+                    APP_NAME:"$Project(测)",
             ]
             applicationId "$Package.demo"
             versionCode 1
@@ -106,6 +107,7 @@ android {
             buildConfigField "String","file_provider_authorities","\"$Package.fileprovider\""
             manifestPlaceholders = [
                     FILE_PROVIDER_AUTHORITIES:"$Package.fileprovider",
+                    APP_NAME:"$Project",
             ]
             applicationId "$Package"
             versionCode 1

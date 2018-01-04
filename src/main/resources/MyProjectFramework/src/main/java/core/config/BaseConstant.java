@@ -124,4 +124,6 @@ public class BaseConstant {
     public static final String PICTURES_PATH = "pictures_path";
     public static final String PHONE_MODEL = "phone_model";
     public static final String PHONE_IMEI = "phone_imei";
+    public static final String OFFICIAL = "official";
+    public static final String TEST = "test";
 }

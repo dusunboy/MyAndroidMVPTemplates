@@ -217,7 +217,6 @@ public class UpdateManager {
         if (isForceClose) {
             CustomToast.getInstance().show(activity.getString(R.string.please_update_version));
             Observable.just("")
-                    .compose(activity.bindToLifecycle())
                     .compose(activity.bindUntilEvent(ActivityEvent.DESTROY))
                     .delay(1000, TimeUnit.MILLISECONDS)
                     .subscribe(new Consumer<String>() {
