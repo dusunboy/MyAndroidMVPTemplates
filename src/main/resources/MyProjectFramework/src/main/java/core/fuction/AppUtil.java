@@ -457,11 +457,11 @@ public class AppUtil {
     }
 
     /**
-     * 获取Assets里的Json
+     * 获取Assets里的文件转为String
      * @param fileName
      * @return
      */
-    public static String getAssetsJson(String fileName) {
+    public static String getAssetsFile2Str(String fileName) {
 
         StringBuilder stringBuilder = new StringBuilder();
         try {

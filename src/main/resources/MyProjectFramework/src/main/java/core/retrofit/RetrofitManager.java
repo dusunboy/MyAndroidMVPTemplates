@@ -48,7 +48,8 @@ public class RetrofitManager {
 
     private void init(String tag) {
         HttpLoggingInterceptor httpLoggingInterceptor = new HttpLoggingInterceptor();
-        httpLoggingInterceptor.setLevel(HttpLoggingInterceptor.Level.BODY);
+        httpLoggingInterceptor.setLevel(SPUtil.getBoolean(BaseConstant.IS_DEBUG) ? HttpLoggingInterceptor.Level.BODY
+                : HttpLoggingInterceptor.Level.NONE);
         client = new OkHttpClientBuilder()
                 .connectionPool(new ConnectionPool(MAX_IDLE_CONNECTIONS, KEEP_ALIVE_DURATION_MS, TimeUnit.SECONDS))
                 .addInterceptor(httpLoggingInterceptor)
