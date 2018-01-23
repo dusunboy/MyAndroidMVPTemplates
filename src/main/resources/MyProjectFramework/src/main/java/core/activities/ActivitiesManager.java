@@ -32,7 +32,7 @@ public class ActivitiesManager {
 	 * 移出最后一个Activity
 	 * @param isFinish 是否结束Activity
 	 */
-	public void popActivity(boolean isFinish) {
+	public void popLastActivity(boolean isFinish) {
 		Object activity= activityStack.lastElement();
 		if (activity != null) {
 			if (isFinish) {
@@ -64,10 +64,11 @@ public class ActivitiesManager {
 
 	/**
 	 * 移出指定的Activity
-	 * @param activity
+	 * @param cls
 	 * @param isFinish 是否结束Activity
 	 */
-	public void popActivity(Object activity, boolean isFinish) {
+	public void popActivity(Class cls, boolean isFinish) {
+		Object activity = getActivity(cls);
 		if (activity != null) {
 			if (isFinish) {
 				if (activity instanceof Activity) {
@@ -76,6 +77,33 @@ public class ActivitiesManager {
 			}
 			activityStack.remove(activity);
 			activity = null;
+		}
+	}
+
+	/**
+	 * 移出指定的Activity
+	 * @param activity
+	 * @param isFinish 是否结束Activity
+	 */
+	private void popActivity(Object activity, boolean isFinish) {
+		if (activity != null) {
+			if (isFinish) {
+				if (activity instanceof Activity) {
+					((Activity) activity).finish();
+				}
+			}
+			activityStack.remove(activity);
+			activity = null;
+		}
+	}
+
+	/**
+	 * 移出指定的Activity
+	 * @param activity
+	 */
+	public void popActivity(Object activity) {
+		if (activity != null) {
+			activityStack.remove(activity);
 		}
 	}
 

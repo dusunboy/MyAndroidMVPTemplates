@@ -77,7 +77,7 @@ public abstract class BasePresenterActivity extends RxAppCompatActivity {
     @Override
     protected void onDestroy() {
         AppUtil.clearTextLineCache();
-        ActivitiesManager.getInstance().popActivity(this ,false);
+        ActivitiesManager.getInstance().popActivity(this);
         super.onDestroy();
     }
 
