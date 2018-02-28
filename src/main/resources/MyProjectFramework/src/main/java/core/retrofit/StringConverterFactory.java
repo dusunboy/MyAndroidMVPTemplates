@@ -16,8 +16,8 @@ import retrofit2.Retrofit;
  */
 public class StringConverterFactory extends Converter.Factory {
 
-    public static com.hnacargo.hnacargogo.core.retrofit.StringConverterFactory create() {
-        return new com.hnacargo.hnacargogo.core.retrofit.StringConverterFactory();
+    public static StringConverterFactory create() {
+        return new StringConverterFactory();
     }
     public Converter<ResponseBody, ?> responseBodyConverter(Type type, Annotation[] annotations,
                                                             Retrofit retrofit) {
