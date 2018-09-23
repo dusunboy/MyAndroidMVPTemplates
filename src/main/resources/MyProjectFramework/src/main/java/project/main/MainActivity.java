@@ -75,15 +75,13 @@ public class MainActivity extends BasePresenterActivity implements MainView,  Ea
                 FileUtil.createDirFile(SPUtil.getString(BaseConstant.IMAGE_PATH, ""));
                 //创建APk路径
                 FileUtil.createDirFile(SPUtil.getString(BaseConstant.APK_PATH, ""));
-                //创建matisse库的图片路径
-                FileUtil.createDirFile(SPUtil.getString(BaseConstant.PICTURES_PATH, ""));
             } catch (IOException e) {
                 e.printStackTrace();
             }
             SPUtil.put(BaseConstant.PHONE_MODEL, android.os.Build.MODEL);
             SPUtil.put(BaseConstant.PHONE_IMEI, AppUtil.getIMEI());
         } else {
-            if (Build.VERSION.SDK_INT >= 23) {
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
                 //申请权限
                 ActivityCompat.requestPermissions(this, permissions, 100);
             }

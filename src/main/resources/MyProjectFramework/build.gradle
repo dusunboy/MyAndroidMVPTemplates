@@ -1,23 +1,6 @@
-buildscript {
-    repositories {
-//        mavenCentral()
-        jcenter()
-    }
-    dependencies {
-        classpath 'me.tatarka:gradle-retrolambda:3.2.5'
-        classpath 'me.tatarka.retrolambda.projectlombok:lombok.ast:0.2.3.a2'
-        //添加apt插件
-        classpath 'com.neenbedankt.gradle.plugins:android-apt:1.8'
-    }
-
-    // Exclude the lombok version that the android plugin depends on.
-    configurations.classpath.exclude group: 'com.android.tools.external.lombok'
-}
-
-apply plugin: 'me.tatarka.retrolambda'
 apply plugin: 'com.android.application'
-apply plugin: 'com.neenbedankt.android-apt'
-
+apply plugin: 'kotlin-android'
+apply plugin: 'kotlin-android-extensions'
 
 android {
     signingConfigs {
@@ -39,10 +22,10 @@ android {
         versionName "1.0.0"
         aaptOptions.cruncherEnabled = false
         aaptOptions.useNewCruncher = false
-        ndk {
-            //设置支持的SO库架构
-            abiFilters  'armeabi-v7a'// , 'x86', 'x86_64', 'arm64-v8a', 'mips' , //'armeabi'
-        }
+//        ndk {
+//            //设置支持的SO库架构
+//            abiFilters  'armeabi-v7a'// , 'x86', 'x86_64', 'arm64-v8a', 'mips' , //'armeabi'
+//        }
         multiDexEnabled true
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
 
@@ -87,6 +70,8 @@ android {
             jniLibs.srcDirs = ['libs']
         }
     }
+    //    单维度ProductFlavor时产生的BuildVariant
+    flavorDimensions "channle"
     productFlavors {
         demo {
             minSdkVersion 15
@@ -99,6 +84,7 @@ android {
             applicationId "$Package.demo"
             versionCode 1
             versionName "1.0.0"
+            dimension "channle"
         }
 
         official {
@@ -112,6 +98,7 @@ android {
             applicationId "$Package"
             versionCode 1
             versionName "1.0.0"
+            dimension "channle"
         }
     }
     repositories {
@@ -129,56 +116,56 @@ android {
 }
 
 dependencies {
-    compile fileTree(dir: 'libs', include: ['*.jar'])
-    androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
-        exclude group: 'com.android.support', module: 'support-annotations'
-    })
-    testCompile 'junit:junit:4.12'
-    compile 'com.android.support:support-annotations:' + SUPPORT_V4_VERSION
-    compile 'com.android.support:appcompat-v7:' + SUPPORT_V7_VERSION
-    compile "com.android.support:support-v4:" + SUPPORT_V4_VERSION
-    compile "com.android.support:recyclerview-v7:" + SUPPORT_V7_VERSION
-    compile "com.android.support:design:" + SUPPORT_DESIGN_VERSION
-    compile 'com.android.support.constraint:constraint-layout:' + CONSTRAINT_LAYOUT_VERSION
-    compile "com.loopj.android:android-async-http:" + ASYNC_HTTP_VERISON
+    implementation fileTree(dir: 'libs', include: ['*.jar'])
+    implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:" + KOTLIN_VERSION
+    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
+    androidTestImplementation 'junit:junit:4.12'
+    implementation 'com.android.support:appcompat-v7:' + SUPPORT_V7_VERSION
+    implementation "com.android.support:support-v4:" + SUPPORT_V4_VERSION
+    implementation "com.android.support:recyclerview-v7:" + SUPPORT_V7_VERSION
+    implementation "com.android.support:design:" + SUPPORT_DESIGN_VERSION
+    implementation 'com.android.support.constraint:constraint-layout:' + CONSTRAINT_LAYOUT_VERSION
+    implementation "com.loopj.android:android-async-http:" + ASYNC_HTTP_VERISON
 
-    compile "io.reactivex.rxjava2:rxandroid:" + RXJAVA2_ANDROID_VERSION
+    implementation "io.reactivex.rxjava2:rxandroid:" + RXJAVA2_ANDROID_VERSION
 // Because RxAndroid releases are few and far between, it is recommended you also
 // explicitly depend on RxJava's latest version for bug fixes and new features.
-    compile "io.reactivex.rxjava2:rxjava:" + RXJAVA2_VERSION
+    implementation "io.reactivex.rxjava2:rxjava:" + RXJAVA2_VERSION
 
-    compile "com.trello.rxlifecycle2:rxlifecycle:" + RXLIFECYCLE2_VERSION
+    implementation "com.trello.rxlifecycle2:rxlifecycle:" + RXLIFECYCLE2_VERSION
 // If you want to bind to Android-specific lifecycles
-    compile "com.trello.rxlifecycle2:rxlifecycle-android:" + RXLIFECYCLE2_VERSION
+    implementation "com.trello.rxlifecycle2:rxlifecycle-android:" + RXLIFECYCLE2_VERSION
 // If you want pre-written Activities and Fragments you can subclass as providers
-    compile "com.trello.rxlifecycle2:rxlifecycle-components:" + RXLIFECYCLE2_VERSION
+    implementation "com.trello.rxlifecycle2:rxlifecycle-components:" + RXLIFECYCLE2_VERSION
 
-    compile "com.jakewharton.rxbinding2:rxbinding:" + RXBINDING2_VERSION
+    implementation "com.jakewharton.rxbinding2:rxbinding:" + RXBINDING2_VERSION
 
     //引入dagger2
-    compile "com.google.dagger:dagger:" + DAGGER2_VERSION
-    apt "com.google.dagger:dagger-compiler:" + DAGGER2_VERSION
+    implementation "com.google.dagger:dagger:" + DAGGER2_VERSION
+    annotationProcessor 'com.google.dagger:dagger-compiler:' + DAGGER2_VERSION
 
     //引入retrofit2
-    compile "com.squareup.retrofit2:retrofit:" + RETROFIT2_VERSION
-    compile "com.squareup.retrofit2:converter-gson:" + RETROFIT2_VERSION
-    compile "com.squareup.retrofit2:adapter-rxjava2:" + RETROFIT2_VERSION
-    compile "com.squareup.okhttp3:logging-interceptor:" + OKHTTP3_LOGGING_VERSION
+    implementation "com.squareup.retrofit2:retrofit:" + RETROFIT2_VERSION
+    implementation "com.squareup.retrofit2:converter-gson:" + RETROFIT2_VERSION
+    implementation "com.squareup.retrofit2:adapter-rxjava2:" + RETROFIT2_VERSION
+    implementation "com.squareup.okhttp3:logging-interceptor:" + OKHTTP3_LOGGING_VERSION
 
-    compile "com.google.code.gson:gson:" + GSON_VERISON
-    compile "com.github.bumptech.glide:glide:" + GLIDE_VERSION
-    compile 'com.github.dusunboy.MyRecyclerViewAdapter:library:' + MY_RECYCLERVIEW_ADAPTER_VERSION
-    compile "com.daimajia.numberprogressbar:library:" + NUMBER_PROGRESS_BAR_VERSION
+    implementation "com.google.code.gson:gson:" + GSON_VERISON
+    implementation 'com.google.android:flexbox:' + FLEX_BOX_VERSION
+    implementation "com.github.bumptech.glide:glide:" + GLIDE_VERSION
+    annotationProcessor 'com.github.bumptech.glide:compiler:'  + GLIDE_VERSION
+    implementation 'com.github.bumptech.glide:okhttp3-integration:' + GLIDE_VERSION
+    implementation 'com.github.dusunboy.MyRecyclerViewAdapter:library:' + MY_RECYCLERVIEW_ADAPTER_VERSION
+    implementation "com.daimajia.numberprogressbar:library:" + NUMBER_PROGRESS_BAR_VERSION
 
-    compile 'com.tencent.bugly:crashreport:' + BUGLY_VERSION
-    debugCompile "com.squareup.leakcanary:leakcanary-android:" + LEAKCANARY_VERSION
-    releaseCompile "com.squareup.leakcanary:leakcanary-android-no-op:" + LEAKCANARY_VERSION
-    testCompile "com.squareup.leakcanary:leakcanary-android-no-op:" + LEAKCANARY_VERSION
-    compile "com.android.support:multidex:" + MULTIDEX_VERSION
-    compile 'com.readystatesoftware.systembartint:systembartint:' + SYSTEMBARTINT_VERSION
-    compile 'com.contrarywind:Android-PickerView:' + ANDROID_PICKER_VIEW
-    compile 'com.google.android:flexbox:' + FLEX_BOX_VERSION
-    compile 'com.zhihu.android:matisse:' + MATISSE_VERSION
-    compile "pub.devrel:easypermissions:" + EASYPERMISSIONS_VERSION
+    implementation 'com.tencent.bugly:crashreport:' + BUGLY_VERSION
+    debugImplementation "com.squareup.leakcanary:leakcanary-android:" + LEAKCANARY_VERSION
+    releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:" + LEAKCANARY_VERSION
+    androidTestImplementation "com.squareup.leakcanary:leakcanary-android-no-op:" + LEAKCANARY_VERSION
+    implementation "com.android.support:multidex:" + MULTIDEX_VERSION
+    implementation 'com.readystatesoftware.systembartint:systembartint:' + SYSTEMBARTINT_VERSION
+    implementation 'com.contrarywind:Android-PickerView:' + ANDROID_PICKER_VIEW
+    implementation 'com.github.HuanTanSheng:EasyPhotos:' + EASYPHOTOS_VERSION
+    implementation "pub.devrel:easypermissions:" + EASYPERMISSIONS_VERSION
 
 }

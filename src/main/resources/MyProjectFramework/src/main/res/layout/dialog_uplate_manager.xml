@@ -16,7 +16,7 @@
         android:layout_marginTop="@dimen/dp_20"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
-        app:max="100"
+        app:progress_max="100"
         app:progress_reached_bar_height="@dimen/dp_10"
         app:progress_text_offset="@dimen/dp_2"
         app:progress_text_size="@dimen/dp_14"

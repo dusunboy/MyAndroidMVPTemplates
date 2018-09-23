@@ -33,16 +33,20 @@ public class MyClass {
         } while (!(mode == PROJECT_FRAMEWORK ||mode == DAGGER2MVP));
         String filePath = null;
         String buildPath = null;
-        String resourcesPath = null;
+//        String resourcesPath = null;
+        String rootPath = null;
         if (isDebug) {
         } else {
+//            D:/Android/workspace/MyAndroidMVPTemplates/build/classes/java/main
             filePath = MyClass.class.getClassLoader().getResource("").getPath();
             filePath = filePath.substring(1, filePath.length() - 1);
+//            D:/Android/workspace/MyAndroidMVPTemplates/build
             buildPath = filePath.substring(0, filePath.indexOf("build") + 5);
-            resourcesPath = buildPath + "/resources/main";
+            rootPath = filePath.substring(0, filePath.indexOf("build") - 1);
+//            resourcesPath = buildPath + "/resources/main";
         }
         if (mode == PROJECT_FRAMEWORK) {
-            generateProjectFrameworkTemplates(in, buildPath, resourcesPath);
+            generateProjectFrameworkTemplates(in, buildPath, rootPath + "/src/main/resources");
         }
         if (mode == DAGGER2MVP) {
             System.out.println("请输入数字选择：1.生成Activity 2.生成Fragment");
@@ -55,7 +59,7 @@ public class MyClass {
                     type = Integer.valueOf(in.next());
                 }
             } while (!(type == ACTIVITY ||type == FRAGMENT));
-            generateDagger2MVPTemplates(in, buildPath, resourcesPath, type);
+            generateDagger2MVPTemplates(in, buildPath, rootPath, type);
         }
 
     }
@@ -64,9 +68,9 @@ public class MyClass {
      * 项目框架生成
      * @param in
      * @param buildPath
-     * @param resourcesPath
+     * @param rootPath
      */
-    private static void generateProjectFrameworkTemplates(Scanner in, String buildPath, String resourcesPath) {
+    private static void generateProjectFrameworkTemplates(Scanner in, String buildPath, String rootPath) {
         System.out.println("请输入项目名称和包名(格式:项目名,包名)：");
         String[] reads = in.next().split(",");
         do {
@@ -79,7 +83,7 @@ public class MyClass {
         System.out.println("开始复制项目框架...");
         String myProjectFrameworkName = "MyProjectFramework";
         try {
-            copyProjectDirectory(resourcesPath + "/" + myProjectFrameworkName, buildPath + templatesFileName, reads);
+            copyProjectDirectory(rootPath + "/" + myProjectFrameworkName, buildPath + templatesFileName, reads);
         } catch (Exception e) {
             e.printStackTrace();
         }

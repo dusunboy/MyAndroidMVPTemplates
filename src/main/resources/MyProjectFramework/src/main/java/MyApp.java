@@ -115,9 +115,5 @@ public class MyApp extends BaseApp {
          * apk路径
          */
         SPUtil.put(BaseConstant.APK_PATH, SPUtil.get(BaseConstant.DIRECTORY, Constant.APP_NAME) + "/Apk");
-        /**
-         * matisse库的图片路径
-         */
-        SPUtil.put(BaseConstant.PICTURES_PATH, SPUtil.getString(BaseConstant.EXTERNAL_STORAGE_DIRECTORY, "") + "/Pictures");
     }
 }
