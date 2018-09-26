@@ -59,7 +59,7 @@ public class MyClass {
                     type = Integer.valueOf(in.next());
                 }
             } while (!(type == ACTIVITY ||type == FRAGMENT));
-            generateDagger2MVPTemplates(in, buildPath, rootPath, type);
+            generateDagger2MVPTemplates(in, buildPath, rootPath + "/src/main/resources", type);
         }
 
     }
