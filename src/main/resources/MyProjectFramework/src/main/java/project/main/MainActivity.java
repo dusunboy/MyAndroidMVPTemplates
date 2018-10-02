@@ -1,5 +1,6 @@
 package $Package.project.main;
 
+import android.annotation.SuppressLint;
 import android.Manifest;
 import android.os.Build;
 import android.os.Bundle;
@@ -88,6 +89,7 @@ public class MainActivity extends BasePresenterActivity implements MainView,  Ea
         }
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void clickEvent() {
     }

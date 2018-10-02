@@ -1,5 +1,6 @@
 package $Package.$ModuleName;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 
 import $Package.R;
@@ -41,6 +42,7 @@ public class $NameActivity extends BasePresenterActivity implements $NameView {
         basePresenter.setViewListener(this);
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void clickEvent() {
     }

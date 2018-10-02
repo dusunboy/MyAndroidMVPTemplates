@@ -1,5 +1,6 @@
 package $Package.$ModuleName;
 
+import android.annotation.SuppressLint;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.view.View;
@@ -45,6 +46,7 @@ public class $Name extends BasePresenterFragment implements $NameView {
         basePresenter.setViewListener(this);
     }
 
+    @SuppressLint("CheckResult")
     @Override
     public void clickEvent() {
     }
