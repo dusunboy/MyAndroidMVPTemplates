@@ -167,5 +167,6 @@ dependencies {
     implementation 'com.contrarywind:Android-PickerView:' + ANDROID_PICKER_VIEW
     implementation 'com.github.HuanTanSheng:EasyPhotos:' + EASYPHOTOS_VERSION
     implementation "pub.devrel:easypermissions:" + EASYPERMISSIONS_VERSION
-
+    //chrome://inspect/#devices
+    implementation 'com.facebook.stetho:stetho:' + STETHO_VERSION
 }
