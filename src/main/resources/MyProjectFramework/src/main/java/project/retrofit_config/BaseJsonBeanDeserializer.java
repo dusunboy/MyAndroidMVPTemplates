@@ -51,7 +51,12 @@ public class BaseJsonBeanDeserializer<T> implements JsonDeserializer<BaseJsonBea
                         JsonElement jsonMessageElement = jsonResultElement.getAsJsonObject().get("message");
                         baseJsonBean.setMessage(jsonMessageElement.getAsString());
                     } else {
-                        baseJsonBean.setResult(fromJson2Object(gson, jsonResultElement, aClass));
+                        String string = new String();
+                        if(string.getClass().equals(aClass)) {
+                            baseJsonBean.setResult(jsonResultElement.toString());
+                        } else {
+                            baseJsonBean.setResult(fromJson2Object(gson, jsonResultElement, aClass));
+                        }
                         baseJsonBean.setResults(null);
                     }
                 }

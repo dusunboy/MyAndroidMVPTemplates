@@ -2,6 +2,7 @@ package $Package;
 
 import android.content.Context;
 
+import com.facebook.stetho.Stetho;
 import com.squareup.leakcanary.LeakCanary;
 import com.squareup.leakcanary.RefWatcher;
 import com.tencent.bugly.crashreport.CrashReport;
@@ -32,6 +33,8 @@ public class MyApp extends BaseApp {
             return;
         }
         refWatcher = LeakCanary.install(this);
+        //chrome浏览器可以查看 SharedPreferences
+        Stetho.initializeWithDefaults(this);
     }
 
     public static RefWatcher getRefWatcher(Context context) {

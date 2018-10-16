@@ -61,9 +61,7 @@ public class MainActivity extends BasePresenterActivity implements MainView,  Ea
         initPermission();
     }
 
-    /**
-     * 初始化权限
-     */
+    @Override
     private void initPermission() {
         //检查权限
         String[] permissions = PermissionUtil.checkPermission(this);

@@ -48,7 +48,7 @@ public class CustomToast {
 
 	/** 显示自定义Toast提示(来自String) **/
 	public void show(String text) {
-		if (!text.equals("")) {
+		if (text != null && !text.equals("")) {
 //			View toastRoot = LayoutInflater.from(context).inflate(
 //					R.layout.custom_toast, null);
 //			((TextView) toastRoot.findViewById(R.id.toast_text)).text(text);
