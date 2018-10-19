@@ -160,8 +160,9 @@ dependencies {
 
     implementation 'com.tencent.bugly:crashreport:' + BUGLY_VERSION
     debugImplementation "com.squareup.leakcanary:leakcanary-android:" + LEAKCANARY_VERSION
+    // Optional, if you use support library fragments:
+    debugImplementation 'com.squareup.leakcanary:leakcanary-support-fragment:' + LEAKCANARY_VERSION
     releaseImplementation "com.squareup.leakcanary:leakcanary-android-no-op:" + LEAKCANARY_VERSION
-    androidTestImplementation "com.squareup.leakcanary:leakcanary-android-no-op:" + LEAKCANARY_VERSION
     implementation "com.android.support:multidex:" + MULTIDEX_VERSION
     implementation 'com.readystatesoftware.systembartint:systembartint:' + SYSTEMBARTINT_VERSION
     implementation 'com.contrarywind:Android-PickerView:' + ANDROID_PICKER_VIEW
