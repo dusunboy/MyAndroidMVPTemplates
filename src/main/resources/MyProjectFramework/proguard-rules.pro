@@ -127,6 +127,9 @@
 -dontwarn com.tencent.bugly.**
 -keep public class com.tencent.bugly.**{*;}
 ##---------------Bugly---------------##
+##---------------EasyPhotos---------------##
+-keep class com.huantansheng.easyphotos.models.** { *; }
+##---------------EasyPhotos---------------##
 
 #### -- Support Library --
 # support-v4
