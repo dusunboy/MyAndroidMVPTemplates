@@ -62,7 +62,7 @@ public class MainActivity extends BasePresenterActivity implements MainView,  Ea
     }
 
     @Override
-    private void initPermission() {
+    public void initPermission() {
         //检查权限
         String[] permissions = PermissionUtil.checkPermission(this);
         if (permissions.length == 0) {
