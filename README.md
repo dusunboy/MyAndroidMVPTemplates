@@ -13,6 +13,10 @@
 ## 2. Dagger2 MVP模块生成
 Dagger2 MVP模板放在resources/dagger2
 
+## 脚手架生成项目
+[使用脚手架生成项目**fw-cli**](https://github.com/dusunboy/fw-cli)
+
+
 
 ## License
 
