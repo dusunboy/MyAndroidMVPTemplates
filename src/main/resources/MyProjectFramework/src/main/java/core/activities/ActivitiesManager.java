@@ -155,15 +155,20 @@ public class ActivitiesManager {
 	 * @param isFinish 是否结束Activity
 	 */
 	public void popAllActivityExceptOne(Class cls, boolean isFinish) {
+		Stack<Object> activityTemp = new Stack<Object>();
 		for (Object activity : activityStack) {
 			if (activity != null) {
 				if (activity instanceof Activity) {
 					if (!((Activity) activity).getClass().equals(cls)) {
-						popActivity(activity, isFinish);
+						if (isFinish) {
+							((Activity) activity).finish();
+						}
+						activityTemp.add(activity);
 					}
 				}
 			}
 		}
+		activityStack.removeAll(activityTemp);
 	}
 
 	/**
