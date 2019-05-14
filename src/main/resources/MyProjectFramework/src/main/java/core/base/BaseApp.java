@@ -9,7 +9,7 @@ import $Package.core.fuction.WindowUtil;
 
 /**
  * 入口驱动
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class BaseApp extends Application {
 

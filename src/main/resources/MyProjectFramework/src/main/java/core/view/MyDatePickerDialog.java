@@ -4,15 +4,16 @@ import android.app.DatePickerDialog;
 import android.content.Context;
 import android.content.res.Resources;
 import android.os.Build;
-import android.support.annotation.RequiresApi;
 import android.view.KeyEvent;
 import android.view.View;
+
+import androidx.annotation.RequiresApi;
 
 import $Package.R;
 
 /**
  * 我的日期选择框
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class MyDatePickerDialog extends DatePickerDialog {
 

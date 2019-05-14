@@ -6,7 +6,7 @@ import java.util.Stack;
 
 /**
  * 管理Activity
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class ActivitiesManager {
 	private static Stack<Object> activityStack;

@@ -1,6 +1,7 @@
 package $Package.core.fuction;
 
 import android.Manifest;
+import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.ActivityManager;
 import android.content.ComponentName;
@@ -14,10 +15,12 @@ import android.location.LocationManager;
 import android.net.Uri;
 import android.provider.CallLog;
 import android.provider.Settings;
-import android.support.v4.app.ActivityCompat;
 import android.telephony.TelephonyManager;
 
+import androidx.core.app.ActivityCompat;
+
 import $Package.core.base.BaseApp;
+import $Package.core.config.BaseConstant;
 import $Package.core.model.CallLogBean;
 
 import java.io.BufferedReader;
@@ -39,19 +42,19 @@ import java.util.UUID;
 
 /**
  * 应用工具类
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class AppUtil {
 
     /**
      * 获取包信息
+     *
      * @return
      */
     public static PackageInfo getPackageInfo() {
         PackageManager packageManager = BaseApp.getAppContext().getPackageManager();
         try {
-            PackageInfo packageInfo = packageManager.getPackageInfo(BaseApp.getAppContext().getPackageName(), 0);
-            return packageInfo;
+            return packageManager.getPackageInfo(BaseApp.getAppContext().getPackageName(), 0);
         } catch (Exception e) {
             e.printStackTrace();
         }
@@ -60,27 +63,29 @@ public class AppUtil {
 
     /**
      * 获取IMEI
+     *
      * @return
      */
     public static String getIMEI() {
         TelephonyManager tm = (TelephonyManager) BaseApp.getAppContext()
-                .getSystemService(BaseApp.getAppContext().TELEPHONY_SERVICE);
+                .getSystemService(Context.TELEPHONY_SERVICE);
         /*
          * 唯一的设备ID： GSM手机的 IMEI 和 CDMA手机的 MEID. Return null if device ID is not
-		 * available.
-		 */
-        String imei = tm.getDeviceId();
+         * available.
+         */
+        @SuppressLint("MissingPermission") String imei = tm.getDeviceId();
         return imei;
     }
 
     /**
      * 获取手机号
+     *
      * @return
      */
     public static String getPhone() {
         TelephonyManager tm = (TelephonyManager) BaseApp.getAppContext()
-                .getSystemService(BaseApp.getAppContext().TELEPHONY_SERVICE);
-        String phone = tm.getLine1Number();
+                .getSystemService(Context.TELEPHONY_SERVICE);
+        @SuppressLint("MissingPermission") String phone = tm.getLine1Number();
         return phone;
     }
 
@@ -96,11 +101,11 @@ public class AppUtil {
             try {
                 MessageDigest md = MessageDigest.getInstance("MD5");
                 md.update(str.getBytes());
-                byte b[] = md.digest();
+                byte[] b = md.digest();
                 int i;
-                StringBuffer buf = new StringBuffer("");
-                for (int offset = 0; offset < b.length; offset++) {
-                    i = b[offset];
+                StringBuilder buf = new StringBuilder("");
+                for (byte b1 : b) {
+                    i = b1;
                     if (i < 0)
                         i += 256;
                     if (i < 16)
@@ -121,6 +126,7 @@ public class AppUtil {
 
     /**
      * 检测GPS是否打开
+     *
      * @return
      */
     public static boolean isGpsEnable() {
@@ -165,14 +171,13 @@ public class AppUtil {
             return ver;
         } catch (Exception e) {
             e.printStackTrace();
-        } finally {
-
         }
         return ver;
     }
 
     /**
      * 调用点话拨号界面
+     *
      * @param phoneNumber
      */
     public static void dialPhone(String phoneNumber) {
@@ -184,8 +189,10 @@ public class AppUtil {
 
     /**
      * 直接打电话
+     *
      * @param phoneNumber
      */
+    @SuppressLint("MissingPermission")
     public static void callPhone(String phoneNumber) {
         Uri uri = Uri.parse("tel:" + phoneNumber);
         Intent intent = new Intent(Intent.ACTION_CALL, uri);
@@ -204,6 +211,7 @@ public class AppUtil {
 
     /**
      * 检测apk是否存在
+     *
      * @param packageName
      * @return
      */
@@ -222,6 +230,7 @@ public class AppUtil {
 
     /**
      * 复制Assets的Apk
+     *
      * @param fileName
      * @param path
      * @return
@@ -251,10 +260,12 @@ public class AppUtil {
 
     /**
      * 获取唯一标识
+     *
      * @return
      */
+    @SuppressLint("MissingPermission")
     public static String getMyUUID() {
-        TelephonyManager tm = (TelephonyManager) BaseApp.getAppContext().getSystemService(BaseApp.getAppContext().TELEPHONY_SERVICE);
+        TelephonyManager tm = (TelephonyManager) BaseApp.getAppContext().getSystemService(Context.TELEPHONY_SERVICE);
         String tmDevice, tmSerial, tmPhone, androidId;
         tmDevice = "" + tm.getDeviceId();
         tmSerial = "" + tm.getSimSerialNumber();
@@ -266,6 +277,7 @@ public class AppUtil {
 
     /**
      * 获取所有通话记录
+     *
      * @return
      */
     public static List<CallLogBean> getAllCallLog() {
@@ -279,7 +291,7 @@ public class AppUtil {
             return null;
         }
         //所有
-        Cursor cursor = BaseApp.getAppContext().getContentResolver().query(CallLog.Calls.CONTENT_URI, new String[]{
+        @SuppressLint("MissingPermission") Cursor cursor = BaseApp.getAppContext().getContentResolver().query(CallLog.Calls.CONTENT_URI, new String[]{
                         CallLog.Calls.NUMBER, CallLog.Calls.CACHED_NAME,
                         CallLog.Calls.TYPE, CallLog.Calls.DATE,
                         CallLog.Calls.DURATION, CallLog.Calls._ID}, null, null,
@@ -324,6 +336,7 @@ public class AppUtil {
 
     /**
      * 获取时间段内的通话记录
+     *
      * @param selectionArgs
      * @param selection
      * @return
@@ -341,7 +354,7 @@ public class AppUtil {
             // for ActivityCompat#requestPermissions for more details.
             return null;
         }
-        Cursor cursor = BaseApp.getAppContext().getContentResolver().query(CallLog.Calls.CONTENT_URI, new String[]{
+        @SuppressLint("MissingPermission") Cursor cursor = BaseApp.getAppContext().getContentResolver().query(CallLog.Calls.CONTENT_URI, new String[]{
                         CallLog.Calls.NUMBER, CallLog.Calls.CACHED_NAME,
                         CallLog.Calls.TYPE, CallLog.Calls.DATE,
                         CallLog.Calls.DURATION, CallLog.Calls._ID}, selection, selectionArgs,
@@ -386,6 +399,7 @@ public class AppUtil {
 
     /**
      * 获取App当前进程名
+     *
      * @param pID
      * @return
      */
@@ -412,7 +426,7 @@ public class AppUtil {
     /**
      * 清除TextLine缓存
      */
-    public static void clearTextLineCache(){
+    public static void clearTextLineCache() {
         Field textLineCached = null;
         try {
             textLineCached = Class.forName("android.text.TextLine").getDeclaredField("sCached");
@@ -430,7 +444,7 @@ public class AppUtil {
         }
         if (cached != null) {
             // Clear the array.
-            for (int i = 0, size = Array.getLength(cached); i < size; i ++) {
+            for (int i = 0, size = Array.getLength(cached); i < size; i++) {
                 Array.set(cached, i, null);
             }
         }
@@ -438,6 +452,7 @@ public class AppUtil {
 
     /**
      * 判断某个界面是否在前台
+     *
      * @param className
      * @return
      */
@@ -458,6 +473,7 @@ public class AppUtil {
 
     /**
      * 获取Assets里的文件转为String
+     *
      * @param fileName
      * @return
      */
@@ -482,5 +498,43 @@ public class AppUtil {
      * 清除用户信息
      */
     public static void clearUserInfo() {
+    }
+
+    /**
+     * 创建默认配置
+     *
+     * @param permissions
+     */
+    public static void createDefaultConfig(List<String> permissions) {
+        try {
+            if (permissions.size() == 0) {
+
+                //创建SD卡目录
+                FileUtil.createDirFile(SPUtil.getString(BaseConstant.DIRECTORY, ""));
+                //创建图片路径
+                FileUtil.createDirFile(SPUtil.getString(BaseConstant.IMAGE_PATH, ""));
+                //创建APk路径
+                FileUtil.createDirFile(SPUtil.getString(BaseConstant.APK_PATH, ""));
+
+                SPUtil.put(BaseConstant.PHONE_MODEL, android.os.Build.MODEL);
+                SPUtil.put(BaseConstant.PHONE_IMEI, AppUtil.getIMEI());
+            } else {
+                for (String perm : permissions) {
+                    if (perm.equals(Manifest.permission.READ_PHONE_STATE)) {
+                        SPUtil.put(BaseConstant.PHONE_MODEL, android.os.Build.MODEL);
+                        SPUtil.put(BaseConstant.PHONE_IMEI, AppUtil.getIMEI());
+                    } else if (perm.equals(Manifest.permission.WRITE_EXTERNAL_STORAGE)) {
+                        //创建SD卡目录
+                        FileUtil.createDirFile(SPUtil.getString(BaseConstant.DIRECTORY, ""));
+                        //创建图片路径
+                        FileUtil.createDirFile(SPUtil.getString(BaseConstant.IMAGE_PATH, ""));
+                        //创建APk路径
+                        FileUtil.createDirFile(SPUtil.getString(BaseConstant.APK_PATH, ""));
+                    }
+                }
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }

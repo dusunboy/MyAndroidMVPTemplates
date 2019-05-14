@@ -5,7 +5,7 @@ import android.os.Parcelable;
 
 /**
  * 系统相册bean
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class MediaBean implements Parcelable {
 

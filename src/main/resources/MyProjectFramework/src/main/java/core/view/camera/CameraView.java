@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * 自定义相机View
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class CameraView implements SurfaceHolder.Callback,
         Camera.AutoFocusCallback, View.OnTouchListener, ShakeListener.OnShakeListener {

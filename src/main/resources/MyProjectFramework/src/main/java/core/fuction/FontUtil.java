@@ -19,7 +19,7 @@ import java.io.OutputStream;
 
 /**
  * 自定义字体
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class FontUtil {
     protected static Typeface sTypeface = null;

@@ -17,7 +17,8 @@
 package $Package.core.type_builder.exception;
 
 import android.os.Build;
-import android.support.annotation.RequiresApi;
+
+import androidx.annotation.RequiresApi;
 
 public class TypeException extends RuntimeException {
     public TypeException() {

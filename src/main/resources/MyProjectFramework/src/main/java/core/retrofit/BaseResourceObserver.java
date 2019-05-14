@@ -14,7 +14,7 @@ import io.reactivex.observers.ResourceObserver;
 
 /**
  * retrofit2 ResourceObserver的基类
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public abstract class BaseResourceObserver<T> extends ResourceObserver<T> {
 

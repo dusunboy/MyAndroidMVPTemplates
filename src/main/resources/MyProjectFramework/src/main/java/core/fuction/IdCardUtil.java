@@ -4,7 +4,7 @@ import android.text.TextUtils;
 
 /**
  * 身份证的校验类
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class IdCardUtil {
 

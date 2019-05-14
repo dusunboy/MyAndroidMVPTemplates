@@ -3,13 +3,13 @@ package $Package.core.base;
 import android.os.Bundle;
 
 import com.readystatesoftware.systembartint.SystemBarTintManager;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import $Package.core.activities.ActivitiesManager;
 import $Package.core.fuction.AppUtil;
 
 /**
  * Activity的基类
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public abstract class BasePresenterActivity extends RxAppCompatActivity {
 

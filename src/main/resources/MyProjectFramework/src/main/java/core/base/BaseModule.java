@@ -7,7 +7,7 @@ import dagger.Provides;
 
 /**
  * Dagger2的Module基类
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 @Module
 public class BaseModule {

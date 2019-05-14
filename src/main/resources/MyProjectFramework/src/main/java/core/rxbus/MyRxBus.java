@@ -8,7 +8,7 @@ import io.reactivex.processors.PublishProcessor;
 
 /**
  * 用于替换EventBus的RxBus实现,同时用做Http响应数据的分发
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class MyRxBus {
 

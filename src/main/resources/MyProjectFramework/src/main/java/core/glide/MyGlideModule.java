@@ -1,7 +1,8 @@
 package $Package.core.glide;
 
 import android.content.Context;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.bumptech.glide.Glide;
 import com.bumptech.glide.GlideBuilder;
@@ -17,7 +18,7 @@ import java.io.InputStream;
 
 /**
  * 我的GlideModule
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 @GlideModule
 public class MyGlideModule extends AppGlideModule {

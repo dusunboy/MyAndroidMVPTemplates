@@ -2,10 +2,11 @@ package $Package.$ModuleName;
 
 import android.annotation.SuppressLint;
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.View;
 import android.view.LayoutInflater;
 import android.view.ViewGroup;
+
+import androidx.annotation.Nullable;
 
 import $Package.R;
 import $Package.core.base.BasePresenterFragment;

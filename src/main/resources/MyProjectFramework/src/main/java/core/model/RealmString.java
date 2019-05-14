@@ -4,7 +4,7 @@ package $Package.core.model;
 //import io.realm.annotations.RealmClass;
 //
 ///**
-// * Created by Vincent on $Time.
+// * Created by Vincent on 2019-05-10 11:33:28.
 // */
 //@RealmClass
 //public class RealmString extends RealmObject {

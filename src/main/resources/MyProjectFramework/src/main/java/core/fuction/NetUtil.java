@@ -19,7 +19,7 @@ import java.util.Enumeration;
 
 /**
  * 网络工具类
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class NetUtil {
     private NetUtil() {

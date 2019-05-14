@@ -9,7 +9,7 @@ import $Package.core.base.BaseApp;
 
 /**
  * SD卡相关的辅助类
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class SDCardUtil {
 

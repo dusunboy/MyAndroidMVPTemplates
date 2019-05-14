@@ -18,7 +18,7 @@ import java.util.List;
 
 /**
  * 文件工具类
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class FileUtil {
 	/**

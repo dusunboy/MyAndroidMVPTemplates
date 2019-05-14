@@ -5,7 +5,8 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapShader;
 import android.graphics.Canvas;
 import android.graphics.Paint;
-import android.support.annotation.NonNull;
+
+import androidx.annotation.NonNull;
 
 import com.bumptech.glide.load.engine.bitmap_recycle.BitmapPool;
 import com.bumptech.glide.load.resource.bitmap.BitmapTransformation;
@@ -14,12 +15,12 @@ import java.security.MessageDigest;
 
 /**
  * glide圆角图片
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class CircleTransformation extends BitmapTransformation {
 
     public CircleTransformation(Context context){
-        super(context);
+        super();
     }
     /**
      *  重写 生成圆角图片

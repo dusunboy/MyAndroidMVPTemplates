@@ -4,7 +4,7 @@ import android.content.DialogInterface;
 
 /**
  * 监听提示框消失
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public interface OnDismiss {
     /**

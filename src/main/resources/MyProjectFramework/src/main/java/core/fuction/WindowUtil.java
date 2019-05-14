@@ -20,7 +20,7 @@ import java.lang.reflect.Field;
 
 /**
  * Window及UI缩放类
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class WindowUtil {
     /** UI设计的竖向高度,单位：px */

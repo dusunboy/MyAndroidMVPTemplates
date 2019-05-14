@@ -1,6 +1,6 @@
 package $Package.project.retrofit_config;
 
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import $Package.R;
 import $Package.core.view.CustomToast;
 

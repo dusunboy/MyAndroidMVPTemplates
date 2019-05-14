@@ -8,7 +8,7 @@ import java.util.regex.Pattern;
 
 /**
  * 颜色工具类
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class ColorUtil {
 

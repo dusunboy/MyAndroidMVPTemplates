@@ -11,7 +11,7 @@ import cz.msebera.android.httpclient.HttpEntity;
 
 /**
  * 异步HTTP请求工具类
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class AsyncHttpReq {
 

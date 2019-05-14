@@ -4,18 +4,16 @@ import android.content.Intent;
 
 import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
-import $Package.core.config.BaseConstant;
-import $Package.core.fuction.SPUtil;
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import $Package.core.fuction.AppUtil;
 import $Package.core.retrofit.RetrofitManager;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
 
 import retrofit2.Retrofit;
 
 
 /**
  * 引导器实例基类
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class BasePresenterActivityImpl {
 

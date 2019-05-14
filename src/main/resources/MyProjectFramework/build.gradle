@@ -16,7 +16,7 @@ android {
 
     defaultConfig {
         applicationId "$Package"
-        minSdkVersion 15
+        minSdkVersion 19
         targetSdkVersion TARGET_SDK_VERSION as int
         versionCode 1
         versionName "1.0.0"
@@ -74,7 +74,7 @@ android {
     flavorDimensions "channle"
     productFlavors {
         demo {
-            minSdkVersion 15
+            minSdkVersion 19
             targetSdkVersion TARGET_SDK_VERSION as int
             buildConfigField "String","file_provider_authorities","\"$Package.demo.fileprovider\""
             manifestPlaceholders = [
@@ -88,7 +88,7 @@ android {
         }
 
         official {
-            minSdkVersion 15
+            minSdkVersion 19
             targetSdkVersion TARGET_SDK_VERSION as int
             buildConfigField "String","file_provider_authorities","\"$Package.fileprovider\""
             manifestPlaceholders = [
@@ -124,25 +124,26 @@ android {
 dependencies {
     implementation fileTree(dir: 'libs', include: ['*.jar'])
     implementation "org.jetbrains.kotlin:kotlin-stdlib-jdk7:" + KOTLIN_VERSION
-    androidTestImplementation 'com.android.support.test.espresso:espresso-core:3.0.1'
     androidTestImplementation 'junit:junit:4.12'
-    implementation 'com.android.support:appcompat-v7:' + SUPPORT_V7_VERSION
-    implementation "com.android.support:support-v4:" + SUPPORT_V4_VERSION
-    implementation "com.android.support:recyclerview-v7:" + SUPPORT_V7_VERSION
-    implementation "com.android.support:design:" + SUPPORT_DESIGN_VERSION
-    implementation 'com.android.support.constraint:constraint-layout:' + CONSTRAINT_LAYOUT_VERSION
-    implementation "com.loopj.android:android-async-http:" + ASYNC_HTTP_VERISON
+    implementation 'androidx.appcompat:appcompat:' + SUPPORT_V7_VERSION
+    implementation 'androidx.legacy:legacy-support-v4:'+ SUPPORT_V4_VERSION
+    implementation 'androidx.recyclerview:recyclerview:' + RECYCLERVIEW_VERSION
+    implementation 'com.google.android.material:material:' + SUPPORT_DESIGN_VERSION
+    implementation 'androidx.constraintlayout:constraintlayout:' + CONSTRAINT_LAYOUT_VERSION
+    implementation 'androidx.annotation:annotation:' + ANNOTATION_VERSION
+    annotationProcessor 'androidx.annotation:annotation:' + ANNOTATION_VERSION
 
+    implementation "com.loopj.android:android-async-http:" + ASYNC_HTTP_VERISON
     implementation "io.reactivex.rxjava2:rxandroid:" + RXJAVA2_ANDROID_VERSION
 // Because RxAndroid releases are few and far between, it is recommended you also
 // explicitly depend on RxJava's latest version for bug fixes and new features.
     implementation "io.reactivex.rxjava2:rxjava:" + RXJAVA2_VERSION
 
-    implementation "com.trello.rxlifecycle2:rxlifecycle:" + RXLIFECYCLE2_VERSION
+    implementation 'com.trello.rxlifecycle3:rxlifecycle:' + RXLIFECYCLE3_VERSION
 // If you want to bind to Android-specific lifecycles
-    implementation "com.trello.rxlifecycle2:rxlifecycle-android:" + RXLIFECYCLE2_VERSION
+    implementation 'com.trello.rxlifecycle3:rxlifecycle-android:' + RXLIFECYCLE3_VERSION
 // If you want pre-written Activities and Fragments you can subclass as providers
-    implementation "com.trello.rxlifecycle2:rxlifecycle-components:" + RXLIFECYCLE2_VERSION
+    implementation 'com.trello.rxlifecycle3:rxlifecycle-components:' + RXLIFECYCLE3_VERSION
 
     implementation "com.jakewharton.rxbinding2:rxbinding:" + RXBINDING2_VERSION
 

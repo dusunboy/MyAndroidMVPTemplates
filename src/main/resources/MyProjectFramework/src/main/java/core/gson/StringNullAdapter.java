@@ -9,7 +9,7 @@ import java.io.IOException;
 
 /**
  * null转为空字符适配器
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class StringNullAdapter extends TypeAdapter<String> {
 

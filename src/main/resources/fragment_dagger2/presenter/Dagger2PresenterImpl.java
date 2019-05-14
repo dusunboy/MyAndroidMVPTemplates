@@ -1,6 +1,6 @@
 package $Package.project.$ModuleName.presenter;
 
-import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.trello.rxlifecycle3.components.support.RxFragment;
 import $Package.core.mvp.BasePresenterFragmentImpl;
 import $Package.core.mvp.BaseView;
 import $Package.core.retrofit.RetrofitManager;

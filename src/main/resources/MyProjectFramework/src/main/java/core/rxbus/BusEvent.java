@@ -2,7 +2,7 @@ package $Package.core.rxbus;
 
 /**
  * BusEvent类
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class BusEvent {
     private int type;

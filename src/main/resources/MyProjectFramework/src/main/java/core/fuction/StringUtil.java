@@ -2,7 +2,7 @@ package $Package.core.fuction;
 
 /**
  * 字符串工具类
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class StringUtil {
 	/**

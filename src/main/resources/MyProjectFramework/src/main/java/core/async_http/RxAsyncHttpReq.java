@@ -4,7 +4,7 @@ import com.google.gson.JsonObject;
 import com.google.gson.JsonParser;
 import com.loopj.android.http.AsyncHttpResponseHandler;
 import com.loopj.android.http.FileAsyncHttpResponseHandler;
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import $Package.core.base.BaseApp;
 import $Package.core.config.BaseConstant;
 import $Package.core.fuction.LogUtil;
@@ -28,7 +28,7 @@ import io.reactivex.schedulers.Schedulers;
 
 /**
  * RxAsyncHttp封装类
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class RxAsyncHttpReq {
 

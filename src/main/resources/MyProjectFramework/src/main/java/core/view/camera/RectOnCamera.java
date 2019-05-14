@@ -15,7 +15,7 @@ import $Package.core.fuction.ScreenUtil;
 
 /**
  * 相机的矩形框
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class RectOnCamera extends View {
     public static final double SCALE_WIDTH = 0.7;

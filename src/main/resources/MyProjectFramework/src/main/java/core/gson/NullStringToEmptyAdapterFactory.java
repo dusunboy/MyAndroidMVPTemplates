@@ -7,7 +7,7 @@ import com.google.gson.reflect.TypeToken;
 
 /**
  * 解析null转为空字符串
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class NullStringToEmptyAdapterFactory<T> implements TypeAdapterFactory {
 

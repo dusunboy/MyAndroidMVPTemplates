@@ -1,18 +1,19 @@
 package $Package.core.base;
 
 import android.os.Bundle;
-import android.support.annotation.Nullable;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
-import $Package.MyApp;
+import androidx.annotation.Nullable;
+
 import com.squareup.leakcanary.RefWatcher;
-import com.trello.rxlifecycle2.components.support.RxFragment;
+import com.trello.rxlifecycle3.components.support.RxFragment;
+import $Package.MyApp;
 
 /**
  * Fragment基类
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public abstract class BasePresenterFragment extends RxFragment {
 

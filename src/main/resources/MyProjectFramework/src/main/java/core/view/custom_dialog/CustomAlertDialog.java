@@ -32,7 +32,7 @@ import java.lang.ref.WeakReference;
 /**
  * 模仿alertDialog编写。<br>
  * 可以直接使用其builder来创建自定义对话框
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class CustomAlertDialog extends Dialog implements DialogInterface.OnKeyListener {
 

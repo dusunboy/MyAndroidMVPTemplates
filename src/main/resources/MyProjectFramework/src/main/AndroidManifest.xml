@@ -3,7 +3,6 @@
     xmlns:tools="http://schemas.android.com/tools"
     package="$Package">
 
-    <uses-permission android:name="android.permission.READ_CALL_LOG" />
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.INTERNET" />
     <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
@@ -16,7 +15,10 @@
         tools:replace="android:label"
         android:label="${APP_NAME}"
         android:supportsRtl="true"
-        android:theme="@style/AppLocalTheme">
+        android:theme="@style/AppLocalTheme"
+        tools:ignore="GoogleAppIndexingWarning"
+        android:networkSecurityConfig="@xml/network_security_config"
+        android:usesCleartextTraffic="true">
         <activity android:name=".project.main.MainActivity">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
@@ -25,7 +27,7 @@
             </intent-filter>
         </activity>
         <provider
-            android:name="android.support.v4.content.FileProvider"
+            android:name="androidx.core.content.FileProvider"
             android:authorities="${FILE_PROVIDER_AUTHORITIES}"
             android:exported="false"
             android:grantUriPermissions="true">

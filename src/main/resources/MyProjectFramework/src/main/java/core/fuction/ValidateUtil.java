@@ -11,7 +11,7 @@ import java.util.regex.Pattern;
 
 /**
  * 正则表达式验证类（验证身份证、车牌号等）
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class ValidateUtil {
 

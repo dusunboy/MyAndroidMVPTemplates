@@ -8,7 +8,7 @@ import android.hardware.SensorManager;
 
 /**
  * 相机传感器监听
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class ShakeListener implements SensorEventListener {
 

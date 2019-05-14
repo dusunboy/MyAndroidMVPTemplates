@@ -2,7 +2,7 @@ package $Package.core.fuction;
 
 /**
  * 银行卡校验类
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class BankCardUtil {
 

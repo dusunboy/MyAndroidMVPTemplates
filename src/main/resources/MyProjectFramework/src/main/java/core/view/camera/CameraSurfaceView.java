@@ -21,7 +21,7 @@ import java.util.List;
 
 /**
  * 相机SurfaceView
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class CameraSurfaceView extends SurfaceView implements SurfaceHolder.Callback, Camera.AutoFocusCallback {
 

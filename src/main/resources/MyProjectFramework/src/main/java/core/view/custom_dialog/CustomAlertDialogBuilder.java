@@ -6,7 +6,7 @@ import android.view.View;
 
 /**
  * 自定义AlertDialogBuilder
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class CustomAlertDialogBuilder implements OnDismiss {
     private final CustomAlertDialog.Builder builder;

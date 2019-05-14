@@ -4,7 +4,7 @@ package $Package.core.gson;
 //
 ///**
 // * json解析RealmList的bean
-// * Created by Vincent on $Time.
+// * Created by Vincent on 2019-05-10 11:33:28.
 // */
 //public class RealmStringListConverter implements JsonSerializer<RealmList<RealmString>>,
 //        JsonDeserializer<RealmList<RealmString>> {

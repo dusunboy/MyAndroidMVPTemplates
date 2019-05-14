@@ -12,7 +12,7 @@ import retrofit2.Retrofit;
 
 /**
  * 纯字符返回接口数据
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class StringConverterFactory extends Converter.Factory {
 

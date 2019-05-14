@@ -17,7 +17,7 @@ import $Package.R;
 
 /**
  * 相机聚焦view
- * Created by Vincent on $Time.
+ * Created by Vincent on 2019-05-10 11:33:28.
  */
 public class FocusView extends SurfaceView implements SurfaceHolder.Callback {
 

@@ -1,6 +1,6 @@
 package $Package.project.$ModuleName.dagger2;
 
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import $Package.core.base.BaseModule;
 import $Package.core.retrofit.RetrofitManager;
 import $Package.project.$ModuleName.presenter.$NamePresenterImpl;

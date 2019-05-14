@@ -1,7 +1,7 @@
 package $Package.project.main.presenter;
 
 
-import com.trello.rxlifecycle2.components.support.RxAppCompatActivity;
+import com.trello.rxlifecycle3.components.support.RxAppCompatActivity;
 import $Package.core.mvp.BasePresenterActivityImpl;
 import $Package.core.mvp.BaseView;
 import $Package.core.retrofit.RetrofitManager;
